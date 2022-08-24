@@ -30,10 +30,8 @@ const DashBoard = ({ Component, ...children }) => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <h1 className="text-xl mt-6 font-semibold text-slate-200 pl-6 my-3">
-          DASHBOARD
-        </h1>
-        <hr className="w-4/5 m-auto  border-y-slate-600 my-6"></hr>
+        <img className="w-2/3 m-auto mt-4" src={require("../assets/image/logo.PNG")} alt="" />
+        <hr className="w-4/5 m-auto  border-y-slate-100 my-4"></hr>
         <Menu theme="dark" mode="inline">
           <Menu.Item
             icon={<HomeOutlined />}

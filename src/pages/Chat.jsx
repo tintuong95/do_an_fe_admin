@@ -4,17 +4,19 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import { css } from "@emotion/css";
 import { UserOutlined } from "@ant-design/icons";
 import io from "socket.io-client";
-const socket = io("http://localhost:4000");
+const socket = io(process.env.REACT_APP_HOST_CHAT);
 const ROOT_CSS = css({
   height: 680,
   
 });
+
+
 const Chat = () => {
   const [listRoom, setListRoom] = useState();
   const [Room, setRoom] = useState();
   const [listMessage, setListMessage] = useState();
   const [message, setMessage] = useState("");
-
+console.log(process.env.REACT_APP_HOST_CHAT);
   useEffect(() => {
     socket.on("connection");
     socket.emit("listRoom", { limit: 100, offset: 0 });
@@ -29,12 +31,17 @@ const Chat = () => {
       socket.off("connection");
     };
   }, [Room?.id]);
-  console.log(listMessage);
+
   return (
-    <div className=" w-2/3">
+    <div className=" w-2/3 m-auto  shadow-lg">
       <Row>
         <Col className="bg-gray-50 p-4 " span={6}>
-          <p className="font-semibold text-xl text-center m-3">Trò chuyện</p>
+          <p
+            className="font-semibold text-lg text-center rounded text-white  my-2 p-2"
+            style={{ backgroundColor: "#f88800" }}
+          >
+            Trò chuyện
+          </p>
           <div
             className="overflow-y-scroll hidden-bar-scroll"
             style={{ height: 680 }}
@@ -61,23 +68,26 @@ const Chat = () => {
           </div>
         </Col>
         <Col className="bg-white flex flex-col  p-2" span={18}>
-          <div className="bg-blue-50 p-4 m-1 flex-none ">
+          <div className="bg-gray-50 p-4 m-1 flex-none ">
             <Row justify="space-between">
               <Col>
-                <p type="link" className="text-xl">
-                    {Room?.fullname} - {Room?.phone}
+                <p type="link" className="text-lg">
+                  {Room?.fullname} - {Room?.phone}
                 </p>
               </Col>
 
               <Col>
-                <Button type="link" onClick={() => {
-                     socket.emit("removeRoom", {
-                       idRoom: Room?.id,
-                     });
-                }}>
+                <Button
+                  type="link"
+                  onClick={() => {
+                    socket.emit("removeRoom", {
+                      idRoom: Room?.id,
+                    });
+                  }}
+                  danger
+                >
                   Xóa trò chuyện
                 </Button>
-               
               </Col>
             </Row>
           </div>
@@ -87,13 +97,13 @@ const Chat = () => {
                 return (
                   <div className="flex justify-end m-4">
                     <div
-                      className="bg-blue-300 mx-2 shadow-lg inline-block p-3 px-6 text-white text-base rounded-lg "
-                      style={{ maxWidth: 700 }}
+                      className=" mx-2 shadow-lg inline-block p-3 px-6 text-white text-base rounded-lg "
+                      style={{ maxWidth: 700, backgroundColor: "#272727" }}
                     >
                       {item.content}
                     </div>
                     <Avatar
-                      style={{ backgroundColor: "#93c5fd" }}
+                      style={{ backgroundColor: "#272727" }}
                       icon={<UserOutlined />}
                     />
                   </div>
@@ -101,10 +111,7 @@ const Chat = () => {
               } else {
                 return (
                   <div className="flex justify-start m-4">
-                    <Avatar
-                  
-                      icon={<UserOutlined />}
-                    />
+                    <Avatar icon={<UserOutlined />} />
                     <div className="bg-gray-100 mx-2 shadow-lg inline-block p-3 px-6  text-base rounded-lg">
                       {item.content}
                     </div>
@@ -114,7 +121,7 @@ const Chat = () => {
             })}
           </ScrollToBottom>
 
-          <div className=" flex flex-none  gap-4 w-full p-4 bg-blue-100  ">
+          <div className=" flex flex-none  gap-4 w-full p-4 bg-gray-100  ">
             <Input.TextArea
               rows={3}
               onChange={(e) => {
@@ -122,8 +129,8 @@ const Chat = () => {
               }}
             ></Input.TextArea>
             <Button
-              type="primary"
-              className="h-auto"
+              className="h-auto rounded-md"
+              style={{ backgroundColor: "white" }}
               onClick={() => {
                 socket.emit("sendMessage", {
                   idRoom: Room?.id,

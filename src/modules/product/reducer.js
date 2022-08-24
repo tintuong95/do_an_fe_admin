@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { openNotification } from "../../utils/notification.js";
-import { actionProductCreate, actionProductGet, actionProductGets, actionProductRemove, actionProductUpdate } from "./action.js";
+import { actionProductChangeStatus, actionProductCreate, actionProductGet, actionProductGets, actionProductRemove, actionProductUpdate } from "./action.js";
 
 const initialState = {
   products: [],
@@ -30,6 +30,21 @@ export const spliceProduct = createSlice({
         console.log(error);
       }
     );
+    //gets change status product success
+    builder.addCase(
+      actionProductChangeStatus.fulfilled,
+      (state, { meta, payload, type }) => {
+        openNotification("success", "Bạn đã thay đổi thành công!");
+      }
+    );
+    //gets change status product failure
+    builder.addCase(
+      actionProductChangeStatus.rejected,
+      (state, { meta, payload, type, error }) => {
+        //message error
+        openNotification("error", "Bạn thay đổi thất bại!");
+      }
+    );
 
     //get group product success
     builder.addCase(
@@ -51,7 +66,7 @@ export const spliceProduct = createSlice({
     builder.addCase(
       actionProductCreate.fulfilled,
       (state, { meta, payload, type }) => {
-        openNotification("success","Bạn đã tạo mới thành công!")
+        openNotification("success", "Bạn đã tạo mới thành công!");
       }
     );
     //create  product fail
@@ -59,7 +74,7 @@ export const spliceProduct = createSlice({
       actionProductCreate.rejected,
       (state, { meta, payload, type, error }) => {
         //message error
-         openNotification("error", "Bạn đã tạo mới thất bại!");
+        openNotification("error", "Bạn đã tạo mới thất bại!");
       }
     );
     //remove  product success
@@ -74,14 +89,14 @@ export const spliceProduct = createSlice({
       actionProductRemove.rejected,
       (state, { meta, payload, type, error }) => {
         //message error
-         openNotification("error", "Bạn đã xóa thất bại!");
+        openNotification("error", "Bạn đã xóa thất bại!");
       }
     );
     //update  product success
     builder.addCase(
       actionProductUpdate.fulfilled,
       (state, { meta, payload, type }) => {
-         openNotification("success", "Bạn đã update thành công!");
+        openNotification("success", "Bạn đã update thành công!");
       }
     );
     //update  product fail
@@ -89,7 +104,7 @@ export const spliceProduct = createSlice({
       actionProductUpdate.rejected,
       (state, { meta, payload, type, error }) => {
         //message error
-         openNotification("error", "Bạn đã update thất bại!");
+        openNotification("error", "Bạn đã update thất bại!");
       }
     );
   },

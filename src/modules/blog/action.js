@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {fetchBlogsGets, fetchBlogsPost, fetchBlogsRemove, fetchBlogsUpdate} from "./api"
+import {fetchBlogsChangeStatus, fetchBlogsGets, fetchBlogsPost, fetchBlogsRemove, fetchBlogsUpdate} from "./api"
 
 const actionBlogsGets = createAsyncThunk(
     'blog/gets',
@@ -7,6 +7,15 @@ const actionBlogsGets = createAsyncThunk(
         return await fetchBlogsGets();
     }
 )
+
+
+const actionBlogsChangeStatus = createAsyncThunk(
+  "blog/change-status",
+  async (payload, thunkAPI) => {
+    return await fetchBlogsChangeStatus(payload);
+  }
+);
+
 
 const actionBlogsPost = createAsyncThunk(
   "blog/post",
@@ -34,4 +43,10 @@ const actionBlogsRemove = createAsyncThunk(
     return await response;
   }
 );
-export {actionBlogsRemove, actionBlogsGets, actionBlogsPost, actionBlogsUpdate };
+export {
+  actionBlogsRemove,
+  actionBlogsGets,
+  actionBlogsPost,
+  actionBlogsUpdate,
+  actionBlogsChangeStatus,
+};

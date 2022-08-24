@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
-import { BlockOutlined } from "@ant-design/icons";
-import DemoColumn from "../components/CharColumn.jsx";
-import { config, useSpring, animated } from "react-spring";
+import ColumnChart from "../components/CharColumn.jsx";
 import AnimateNumber from "../components/AnimateNumber.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,65 +33,75 @@ const Home = () => {
 
   return (
     <div className="w-full ">
-      <div className="grid  grid-cols-4  gap-4 w-full mb-8">
-        <div className="bg-white p-5 rounded-sm flex flex-col text-center">
+      <div className="grid  grid-cols-4  gap-4 w-full mb-4">
+        <div className="bg-white p-5 rounded-lg shadow-lg flex flex-col text-center ">
           <img
             width={100}
             alt="money"
             className="m-auto"
             src="https://img.icons8.com/bubbles/100/000000/money.png"
           />
-          <p className=" text-slate-600 text-base">Tổng doanh thu</p>
+
           <p className="font-semibold text-2xl  text-slate-600">
-            <AnimateNumber number={Number(turnOver)} />
+            <AnimateNumber type="currency" number={Number(turnOver)} />
           </p>
+          <p className=" text-slate-600 text-base">TỔNG DOANH THU (VND)</p>
         </div>
-        <div className="bg-white p-5 rounded-sm flex flex-col text-center">
+        <div className="bg-white p-5 rounded-lg shadow-lg flex flex-col text-center">
           <img
             width={100}
             alt="money"
             className="m-auto"
             src="https://img.icons8.com/clouds/100/000000/money.png"
           />
-          <p className=" text-slate-600 text-base">Tổng đơn hàng</p>
+
           <p className="font-semibold text-2xl  text-slate-600">
             <AnimateNumber number={Number(counterTotal)} />
           </p>
+          <p className=" text-slate-600 text-base">TỔNG ĐƠN HÀNG (ĐƠN)</p>
         </div>
-        <div className="bg-white p-5 rounded-sm flex flex-col text-center">
+        <div className="bg-white p-5 rounded-lg shadow-lg flex flex-col text-center">
           <img
             width={100}
             alt="money"
             className="m-auto"
             src="https://img.icons8.com/clouds/100/000000/money-bag.png"
           />
-          <p className=" text-slate-600 text-base">Doanh thu trong tháng</p>
+
           <p className="font-semibold text-2xl  text-slate-600">
-            <AnimateNumber number={Number(turnOverMonth)} />
+            <AnimateNumber type="currency" number={Number(turnOverMonth)} />
           </p>
+          <p className=" text-slate-600 text-base">DOANH THU THÁNG (VND)</p>
         </div>
-        <div className="bg-white p-5 rounded-sm flex flex-col text-center">
+        <div className="bg-white p-5 rounded-lg shadow-lg flex flex-col text-center">
           <img
             width={100}
             alt="money"
             className="m-auto"
             src="https://img.icons8.com/bubbles/100/000000/money-bag.png"
           />
-          <p className=" text-slate-600 text-base"> Đơn hàng trong tháng</p>
+
           <p className="font-semibold text-2xl  text-slate-600">
             <AnimateNumber number={Number(counterMonth)} />
           </p>
+          <p className=" text-slate-600 text-base">ĐƠN TRONG THÁNG (ĐƠN)</p>
         </div>
       </div>
       <Row gutter={24}>
         <Col span={12}>
-          <div className="bg-white rounded p-8">
-            <DemoColumn data={totalData} />
+          <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+            <ColumnChart data={totalData.slice(-7)} />
+            <p className=" text-slate-600 text-base mt-4 text-center">
+              THÔNG KÊ DOANH SỐ
+            </p>
           </div>
         </Col>
         <Col span={12}>
-          <div className="bg-white rounded p-8">
-            <DemoColumn data={counterData} />
+          <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+            <ColumnChart data={counterData.slice(-7)} />
+            <p className=" text-slate-600 text-base mt-4 text-center">
+              THÔNG KÊ ĐƠN HÀNG
+            </p>
           </div>
         </Col>
       </Row>

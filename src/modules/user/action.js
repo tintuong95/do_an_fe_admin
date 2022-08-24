@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {  fetchProductCreate, fetchProductGet, fetchProductGets, fetchProductRemove, fetchProductUpdate, fetchUserGets, fetchUserRemove } from "./api.js";
+import {  fetchProductCreate, fetchProductGet, fetchProductGets, fetchProductRemove, fetchProductUpdate, fetchUserChangeStatus, fetchUserGets, fetchUserRemove } from "./api.js";
 
 
 
@@ -9,6 +9,12 @@ const actionUserGets =createAsyncThunk(
         return await fetchUserGets()
     }
 )
+const actionUserChangeStatus = createAsyncThunk(
+  "user/change-status",
+  async (payload, thunkAPI) => {
+    return await fetchUserChangeStatus(payload);
+  }
+);
 
 
 // const actionProductGet = createAsyncThunk(
@@ -41,4 +47,4 @@ const actionUserRemove = createAsyncThunk(
   }
 );
 
-export { actionUserGets, actionUserRemove };
+export { actionUserGets, actionUserRemove, actionUserChangeStatus };

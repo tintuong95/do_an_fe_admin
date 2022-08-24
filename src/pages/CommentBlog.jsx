@@ -1,21 +1,31 @@
-import { Button, Space, Table, Tag } from "antd";
+import { Button,  Modal,  Table, Tag } from "antd";
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation ,useParams} from "react-router-dom";
+import {  useParams} from "react-router-dom";
 import { actionCommentBlogGets, actionCommentBlogRemove } from "../modules/comment-blog/action.js";
-import { actionCommentProductGets, actionCommentProductRemove } from "../modules/comment-product/action.js";
 
-
+import { ExclamationCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const CommentBlog = () => {
-
-  const { id } = useParams()
-  const dispatch=useDispatch()
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const { commentBlogs } = useSelector((state) => state.commentBlogReducer);
 
+  //modal delete binh luan
+  const confirm = (id, idBlog) => {
+    Modal.confirm({
+      title: "Xác nhận",
+      icon: <ExclamationCircleOutlined />,
+      content: "Bạn muốn bình luận này !",
+      okText: "Đồng ý",
+      cancelText: "Hủy bỏ",
+      onOk() {
+        dispatch(actionCommentBlogRemove({ id, idBlog }));
+      },
+    });
+  };
 
- 
   const columns = [
     {
       title: "#",
@@ -37,7 +47,7 @@ const CommentBlog = () => {
       key: "updatedAt",
 
       dataIndex: "updatedAt",
-      render: (text) => <a>{new Date(text).toLocaleDateString()}</a>,
+      render: (text) => <a>{new Date(text).toLocaleDateString("vi-VN")}</a>,
     },
     {
       title: "Xóa",
@@ -50,12 +60,11 @@ const CommentBlog = () => {
             type="dashed"
             danger
             onClick={() => {
-              console.log({ id: text.id, idBlog: id });
-              dispatch(actionCommentBlogRemove({ id: text.id, idBlog: id }));
+              confirm(text.id, id);
+              
             }}
-          >
-            Remove
-          </Button>
+            icon={<DeleteOutlined />}
+          ></Button>
         );
       },
     },
@@ -67,6 +76,7 @@ const CommentBlog = () => {
 
   return (
     <Table
+      className="w-2/3 m-auto"
       columns={columns}
       dataSource={commentBlogs.map((item) => ({
         ...item,

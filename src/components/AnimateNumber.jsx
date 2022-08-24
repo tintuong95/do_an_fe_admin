@@ -15,9 +15,20 @@ const AnimateNumber = (props) => {
     return (
       <>
         <animated.div>
-          {number.to((n) => n.toLocaleString("vn-VN"))}
-        </animated.div>
+          {number.to((n) => {
+            if (props.type == "currency") {
+              var formatter = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "VND",
+              });
+              return formatter.format(n); 
+            }else{
 
+              return n.toFixed(0)
+            }
+             
+          })}
+        </animated.div>
       </>
     );
 };

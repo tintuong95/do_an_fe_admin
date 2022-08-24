@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {  fetchProductCreate, fetchProductGet, fetchProductGets, fetchProductRemove, fetchProductUpdate } from "./api.js";
+import {  fetchProductChangeStatus, fetchProductCreate, fetchProductGet, fetchProductGets, fetchProductRemove, fetchProductUpdate } from "./api.js";
 
 
 
@@ -9,6 +9,15 @@ const actionProductGets =createAsyncThunk(
         return await fetchProductGets()
     }
 )
+
+
+
+const actionProductChangeStatus = createAsyncThunk(
+  "product/status-change",
+  async (payload, thunkAPI) => {
+    return await fetchProductChangeStatus(payload);
+  }
+);
 
 
 const actionProductGet = createAsyncThunk(
@@ -47,4 +56,5 @@ export {
   actionProductCreate,
   actionProductRemove,
   actionProductUpdate,
+  actionProductChangeStatus,
 };

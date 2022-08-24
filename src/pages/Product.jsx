@@ -12,8 +12,14 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import {
+  ExclamationCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
+
+import {
+  actionProductChangeStatus,
   actionProductGets,
   actionProductRemove,
 } from "../modules/product/action.js";
@@ -86,8 +92,10 @@ const Product = () => {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
-      render: (text) => {
-        return <Switch defaultChecked={text == "0" ? false : true} />;
+      render: (text,record) => {
+        return <Switch defaultChecked={text == "0" ? false : true}  onChange={()=>{
+          dispatch(actionProductChangeStatus({id:record.id}));
+        }}/>;
       },
       sorter: (a, b) => {
         return Number(a) > Number(b);
@@ -105,7 +113,7 @@ const Product = () => {
               pathname: "/ratings/" + record.id,
             }}
           >
-            {text.length} đánh giá
+            <Button type="link"> {text.length} đánh giá</Button>
           </NavLink>
         );
       },
@@ -122,7 +130,7 @@ const Product = () => {
               pathname: "/comment/product/" + record.id,
             }}
           >
-            {text.length} bình luận
+            <Button type="link">{text.length} bình luận</Button>
           </NavLink>
         );
       },
@@ -132,7 +140,7 @@ const Product = () => {
       key: "updatedAt",
 
       dataIndex: "updatedAt",
-      render: (text) => <a>{new Date(text).toLocaleDateString()}</a>,
+      render: (text) => <a>{new Date(text).toLocaleDateString("vi-VN")}</a>,
     },
     {
       title: "Sửa",
@@ -143,7 +151,7 @@ const Product = () => {
             state: { data: text },
           }}
         >
-          <Button type="dashed">Edit</Button>
+          <Button type="dashed" icon={<EditOutlined/>}></Button>
         </Link>
       ),
     },
@@ -157,8 +165,9 @@ const Product = () => {
           onClick={() => {
             confirm(text.id);
           }}
+          icon={<DeleteOutlined/>}
         >
-          Remove
+          
         </Button>
       ),
     },

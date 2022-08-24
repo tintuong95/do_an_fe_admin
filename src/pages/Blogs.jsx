@@ -13,9 +13,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, DeleteOutlined ,EditOutlined } from "@ant-design/icons";
 
-import { actionBlogsGets, actionBlogsRemove } from "../modules/blog/action";
+import { actionBlogsChangeStatus, actionBlogsGets, actionBlogsRemove, actionBlogsUpdate } from "../modules/blog/action";
 import history from "../utils/history.js";
 
 const Blogs = () => {
@@ -25,9 +25,7 @@ const Blogs = () => {
   const [keySearch, setKeySearch] = useState(null);
   const [search, setSearch] = useState(null);
 
-  const onChange = (checked) => {
-    console.log(`switch to ${checked}`);
-  };
+ 
   //modal delete product
   const confirm = (id) => {
     Modal.confirm({
@@ -78,7 +76,9 @@ const Blogs = () => {
       dataIndex: "status",
       render: (text, record, index) => (
         <Switch
-          onChange={onChange}
+          onChange={()=>{
+                     dispatch(actionBlogsChangeStatus({ id: record.id }));
+          }}
           defaultChecked={text == "0" ? true : false}
         />
       ),
@@ -86,13 +86,7 @@ const Blogs = () => {
         return Number(a) > Number(b);
       },
     },
-    {
-      title: "Đánh giá",
-      key: "ratings",
 
-      dataIndex: "ratings",
-      render: (text) => <a>5 đánh giá</a>,
-    },
     {
       title: "Bình luận",
       key: "BlogComment",
@@ -102,10 +96,9 @@ const Blogs = () => {
         <NavLink
           to={{
             pathname: "/comment/blogs/" + record.id,
-           
           }}
         >
-          {text.length} bình luận
+          <Button type="link">{text.length} bình luận</Button>
         </NavLink>
       ),
     },
@@ -114,7 +107,7 @@ const Blogs = () => {
       key: "updatedAt",
 
       dataIndex: "updatedAt",
-      render: (text) => <a>{new Date(text).toLocaleDateString()}</a>,
+      render: (text) => <a>{new Date(text).toLocaleDateString("vi-VN")}</a>,
     },
     {
       title: "Sửa",
@@ -125,7 +118,7 @@ const Blogs = () => {
             state: { data: text },
           }}
         >
-          <Button type="dashed">Edit</Button>
+          <Button type="dashed" icon={<EditOutlined />}></Button>
         </Link>
       ),
     },
@@ -139,9 +132,8 @@ const Blogs = () => {
           onClick={() => {
             confirm(text.id);
           }}
-        >
-          Remove
-        </Button>
+          icon={<DeleteOutlined />}
+        ></Button>
       ),
     },
   ];

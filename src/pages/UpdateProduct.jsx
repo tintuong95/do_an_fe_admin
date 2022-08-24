@@ -15,12 +15,10 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { actionGroupProductGets } from "../modules/group-product/action.js";
-import {
-  actionProductCreate,
-  actionProductUpdate,
-} from "../modules/product/action.js";
+
 import { useLocation } from "react-router-dom";
 import uploadPlugin from "../utils/uploadAdapter.js";
+import { actionProductUpdate } from "../modules/product/action.js";
 
 const { Option } = Select;
 
@@ -47,8 +45,8 @@ const UpdateProduct = () => {
         data.append(item[0], item[1]);
       }
     });
-    dispatch(
-      ({ id: state.data.id, data }));
+    console.log("haha", state.data.id);
+    dispatch(actionProductUpdate({ id: state.data.id, data }));
   }
 
   useEffect(() => {

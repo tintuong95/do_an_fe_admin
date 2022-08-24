@@ -1,7 +1,6 @@
 import DashBoard from "./layouts/Layout.jsx";
 import {Route,Switch} from "react-router-dom"
 import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
 import Product from "./pages/Product.jsx";
 import CreateProduct from "./pages/CreateProduct.jsx";
 import UpdateProduct from "./pages/UpdateProduct.jsx";
@@ -34,7 +33,6 @@ function AppRouter() {
       <DashBoard path="/update-blog" Component={UpdateBlog} />
       <DashBoard path="/create-blog" Component={CreateBlogs} />
       <DashBoard path="/product" Component={Product} />
-      <DashBoard path="/about" Component={About} />
       <DashBoard path="/blogs" Component={Blogs} />
       <DashBoard path="/home" Component={Home} />
       <DashBoard path="/*" Component={Home} />

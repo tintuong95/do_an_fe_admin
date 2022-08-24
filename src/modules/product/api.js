@@ -7,6 +7,15 @@ async function fetchProductGets() {
   });
 }
 
+
+
+async function fetchProductChangeStatus(payload) {
+  return await fetchAxios({
+    method: "get",
+    url: "/product/status/" + payload.id,
+  });
+}
+
 async function fetchProductGet(id) {
   return await fetchAxios({
     method: "get",
@@ -52,4 +61,5 @@ export {
   fetchProductRemove,
   fetchProductGet,
   fetchProductUpdate,
+  fetchProductChangeStatus,
 };

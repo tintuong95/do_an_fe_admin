@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { openNotification } from "../../utils/notification.js";
-import { actionProductCreate, actionProductGet, actionProductGets, actionProductRemove, actionProductUpdate, actionUserGets, actionUserRemove } from "./action.js";
+import { actionProductCreate, actionProductGet, actionProductGets, actionProductRemove, actionProductUpdate, actionUserChangeStatus, actionUserGets, actionUserRemove } from "./action.js";
 
 const initialState = {
   users: [],
@@ -15,14 +15,14 @@ export const spliceUser = createSlice({
   reducers: {},
   //handler reducer global
   extraReducers: (builder) => {
-    //gets group product success
+    //gets  user success
     builder.addCase(
       actionUserGets.fulfilled,
       (state, { meta, payload, type }) => {
         state.users = payload.data;
       }
     );
-    //gets group product fail
+    //gets  user fail
     builder.addCase(
       actionUserGets.rejected,
       (state, { meta, payload, type, error }) => {
@@ -31,7 +31,23 @@ export const spliceUser = createSlice({
       }
     );
 
-    // //get group product success
+    //gets change status user success
+    builder.addCase(
+      actionUserChangeStatus.fulfilled,
+      (state, { meta, payload, type }) => {
+        openNotification("success", "Bạn đã thay đổi thành công!");
+      }
+    );
+    //gets change status user fail
+    builder.addCase(
+      actionUserChangeStatus.rejected,
+      (state, { meta, payload, type, error }) => {
+        //message error
+        openNotification("error", "Bạn đã thay đổi thất bại!");
+      }
+    );
+
+    // //get change status user success
     // builder.addCase(
     //   actionProductGet.fulfilled,
     //   (state, { meta, payload, type }) => {

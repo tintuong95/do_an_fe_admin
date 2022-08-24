@@ -11,9 +11,13 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 
-import { actionUserGets, actionUserRemove } from "../modules/user/action.js";
+import {
+  actionUserChangeStatus,
+  actionUserGets,
+  actionUserRemove,
+} from "../modules/user/action.js";
 import history from "../utils/history.js";
 
 const Users = () => {
@@ -105,8 +109,16 @@ const Users = () => {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
-      render: (text) => {
-        return <Switch defaultChecked={text == "0" ? false : true} />;
+      render: (text, record) => {
+        console.log(record)
+        return (
+          <Switch
+            onChange={() => {
+              dispatch(actionUserChangeStatus({ id: record.id }));
+            }}
+            defaultChecked={text == "0" ? false : true}
+          />
+        );
       },
 
       sorter: (a, b) => {
@@ -118,7 +130,7 @@ const Users = () => {
       key: "updatedAt",
 
       dataIndex: "updatedAt",
-      render: (text) => <a>{new Date(text).toLocaleDateString()}</a>,
+      render: (text) => <a>{new Date(text).toLocaleDateString("vi-VN")}</a>,
     },
     {
       title: "Xóa",
@@ -130,9 +142,8 @@ const Users = () => {
             onClick={() => {
               confirm(text.id);
             }}
-          >
-            Remove
-          </Button>
+            icon={<DeleteOutlined />}
+          ></Button>
         );
       },
     },

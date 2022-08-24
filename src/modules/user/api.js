@@ -7,6 +7,14 @@ async function fetchUserGets() {
   });
 }
 
+
+async function fetchUserChangeStatus(payload) {
+  return await fetchAxios({
+    method: "get",
+    url: "/user/status/" + payload.id,
+  });
+}
+
 // async function fetchProductGet(id) {
 //   return await fetchAxios({
 //     method: "get",
@@ -46,4 +54,4 @@ async function fetchUserRemove(id){
   });
 }
 
-export { fetchUserGets, fetchUserRemove };
+export { fetchUserGets, fetchUserRemove, fetchUserChangeStatus };

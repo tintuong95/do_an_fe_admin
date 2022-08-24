@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { openNotification } from "../../utils/notification.js";
-import {actionBlogsGets, actionBlogsPost, actionBlogsRemove, actionBlogsUpdate} from "./action"
+import {actionBlogsChangeStatus, actionBlogsGets, actionBlogsPost, actionBlogsRemove, actionBlogsUpdate} from "./action"
 
 const initialState = {
     blogs : [],
@@ -24,6 +24,21 @@ export const spliceBlogs = createSlice({
         actionBlogsGets.rejected,
         (state, { meta, payload, type }, error) => {
           console.log(error);
+        }
+      );
+      // Gets Blogs change status  success
+      builder.addCase(
+        actionBlogsChangeStatus.fulfilled,
+        (state, { meta, payload, type }) => {
+                    openNotification("success", "Bạn đã thay đổi thành công!");
+        }
+      );
+
+      // Gets Blogs change status fail
+      builder.addCase(
+        actionBlogsChangeStatus.rejected,
+        (state, { meta, payload, type }, error) => {
+               openNotification("error", "Bạn đã thay đổi thất bại!");
         }
       );
 

@@ -2,7 +2,11 @@ import { Button, Col, Input, Modal, Row, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  ExclamationCircleOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { actionOrderDelete, actionOrderGets } from "../modules/order/action.js";
 const { confirm } = Modal;
 const Order = () => {
@@ -71,7 +75,7 @@ const Order = () => {
       title: "Thời gian",
       key: "updatedAt",
       dataIndex: "updatedAt",
-      render: (text) => new Date(text).toLocaleDateString(),
+      render: (text) => new Date(text).toLocaleDateString("vi-VN"),
     },
     {
       title: "Chi tiết ",
@@ -84,7 +88,7 @@ const Order = () => {
               state: record,
             }}
           >
-            <Button type="dashed">Chi tiết</Button>
+            <Button type="dashed" icon={<EyeOutlined />}></Button>
           </NavLink>
         );
       },
@@ -99,8 +103,9 @@ const Order = () => {
           onClick={() => {
             showDeleteConfirm(record.id);
           }}
+          icon={<DeleteOutlined />}
         >
-          Remove
+          
         </Button>
       ),
     },

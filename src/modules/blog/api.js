@@ -7,6 +7,15 @@ async function fetchBlogsGets() {
   });
 }
 
+
+async function fetchBlogsChangeStatus(payload) {
+  return await fetchAxios({
+    method: "get",
+    url: "/blog/status/" + payload.id,
+  });
+}
+
+
 async function fetchBlogsPost(payload) {
   return await fetchAxios({
     method: "post",
@@ -40,4 +49,10 @@ async function fetchBlogsRemove(payload) {
   });
 }
 
-export { fetchBlogsGets, fetchBlogsPost, fetchBlogsUpdate, fetchBlogsRemove };
+export {
+  fetchBlogsGets,
+  fetchBlogsPost,
+  fetchBlogsUpdate,
+  fetchBlogsRemove,
+  fetchBlogsChangeStatus,
+};

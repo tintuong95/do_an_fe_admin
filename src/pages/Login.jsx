@@ -7,17 +7,17 @@ const Login = () => {
 
 
   return (
-    <div className="flex justify-center items-center h-screen ">
-      <form className=" " style={{ width: 370 }}>
+    <div className="flex justify-center items-center h-screen bg-login ">
+      <form className=" bg-white p-8 rounded-lg shadow-xl  " style={{ width: 370 }}>
         <div>
-          <p className="text-4xl text-stone-600 font-semibold mb-6 border-l-4 border-l-green-500 pl-3">
-            ĐĂNG NHẬP
+          <p className="text-2xl  font-semibold mb-6 ">
+            Đăng Nhập
           </p>
         </div>
         <div className="flex flex-col mb-6">
           <div className="">
             <label
-              className="block text-lg mb-3 text-gray-500 font-bold pr-4"
+              className="block text-lg mb-3 text-gray-300 font-bold pr-4"
               for="inline-full-name"
             >
               Tên tài khoản
@@ -38,7 +38,7 @@ const Login = () => {
         <div className="flex flex-col mb-6">
           <div className="">
             <label
-              className="block text-lg text-gray-500 font-bold mb-3 pr-4"
+              className="block text-lg text-gray-300 font-bold mb-3 pr-4"
               for="inline-password"
             >
               Mật khẩu
@@ -59,7 +59,7 @@ const Login = () => {
         <div className="flex  mb-6">
           <label className=" block text-gray-500 font-bold">
             <input className="mr-2 leading-tight" type="checkbox" />
-            <span className="text-lg">Ghi nhớ</span>
+            <span className="text-lg text-gray-300">Ghi nhớ</span>
           </label>
         </div>
         <div className="flex">
@@ -68,8 +68,7 @@ const Login = () => {
               className="shadow text-lg w-full bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="button"
               onClick={() => {
-                dispatch(actionAdminLogin(state))
-               
+                dispatch(actionAdminLogin(state));
               }}
             >
               Đăng nhập
