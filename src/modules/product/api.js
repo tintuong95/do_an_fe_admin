@@ -1,0 +1,55 @@
+import fetchAxios from "../../configs/axios.js";
+
+async function fetchProductGets() {
+  return await fetchAxios({
+    method: "get",
+    url: "/product",
+  });
+}
+
+async function fetchProductGet(id) {
+  return await fetchAxios({
+    method: "get",
+    url: "/product/" + id,
+  });
+}
+
+async function fetchProductCreate(payload) {
+  return await fetchAxios({
+    method: "post",
+    url: "/product",
+    data: payload,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      "Accept": "multipart/form-data",
+    },
+  });
+}
+
+async function fetchProductUpdate({data,id}) {
+  return await fetchAxios({
+    method: "put",
+    url: "/product/" + id,
+    data: data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "multipart/form-data",
+    },
+  });
+}
+
+
+async function fetchProductRemove(id){
+  return await fetchAxios({
+    method: "delete",
+    url: "/product/" + id,
+  });
+}
+
+export {
+  fetchProductGets,
+  fetchProductCreate,
+  fetchProductRemove,
+  fetchProductGet,
+  fetchProductUpdate,
+};
