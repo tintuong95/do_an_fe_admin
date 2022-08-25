@@ -8,14 +8,22 @@ import {
   Col,
   Input,
   Modal,
-  
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { ExclamationCircleOutlined, DeleteOutlined ,EditOutlined } from "@ant-design/icons";
+import {
+  ExclamationCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
-import { actionBlogsChangeStatus, actionBlogsGets, actionBlogsRemove, actionBlogsUpdate } from "../modules/blog/action";
+import {
+  actionBlogsChangeStatus,
+  actionBlogsGets,
+  actionBlogsRemove,
+  actionBlogsUpdate,
+} from "../modules/blog/action";
 import history from "../utils/history.js";
 
 const Blogs = () => {
@@ -25,7 +33,6 @@ const Blogs = () => {
   const [keySearch, setKeySearch] = useState(null);
   const [search, setSearch] = useState(null);
 
- 
   //modal delete product
   const confirm = (id) => {
     Modal.confirm({
@@ -76,8 +83,8 @@ const Blogs = () => {
       dataIndex: "status",
       render: (text, record, index) => (
         <Switch
-          onChange={()=>{
-                     dispatch(actionBlogsChangeStatus({ id: record.id }));
+          onChange={() => {
+            dispatch(actionBlogsChangeStatus({ id: record.id }));
           }}
           defaultChecked={text == "0" ? true : false}
         />

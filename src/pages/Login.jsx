@@ -8,11 +8,12 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-login ">
-      <form className=" bg-white p-8 rounded-lg shadow-xl  " style={{ width: 370 }}>
+      <form
+        className=" bg-white p-8 rounded-lg shadow-xl  "
+        style={{ width: 370 }}
+      >
         <div>
-          <p className="text-2xl  font-semibold mb-6 ">
-            Đăng Nhập
-          </p>
+          <p className="text-2xl  font-semibold mb-6 ">Đăng Nhập</p>
         </div>
         <div className="flex flex-col mb-6">
           <div className="">
@@ -65,11 +66,12 @@ const Login = () => {
         <div className="flex">
           <div className="w-full">
             <button
-              className="shadow text-lg w-full bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="shadow text-lg w-full   focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="button"
               onClick={() => {
                 dispatch(actionAdminLogin(state));
               }}
+              style={{ backgroundColor: "#326c05" }}
             >
               Đăng nhập
             </button>

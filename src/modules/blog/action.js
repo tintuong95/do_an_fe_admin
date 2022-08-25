@@ -12,7 +12,9 @@ const actionBlogsGets = createAsyncThunk(
 const actionBlogsChangeStatus = createAsyncThunk(
   "blog/change-status",
   async (payload, thunkAPI) => {
-    return await fetchBlogsChangeStatus(payload);
+    const res = await fetchBlogsChangeStatus(payload);
+      thunkAPI.dispatch(actionBlogsGets());
+    return await res;
   }
 );
 

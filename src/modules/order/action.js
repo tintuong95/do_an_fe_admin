@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchOrderCounterData, fetchOrderCounterMonth, fetchOrderGetAll, fetchOrderGets, fetchOrderRemove, fetchOrderTotalCouter, fetchOrderTotalData, fetchOrderTotalTurnOver } from "./api.js";
+import { fetchOrderCounterData, fetchOrderCounterMonth, fetchOrderGetAll, fetchOrderGets, fetchOrderRemove, fetchOrderTotalCouter, fetchOrderTotalData, fetchOrderTotalTurnOver, fetchOrderTurnOverMonth } from "./api.js";
 
 
 
@@ -21,7 +21,7 @@ const actionOrderTotalTurnOver = createAsyncThunk(
 const actionOrderTurnOverMonth = createAsyncThunk(
   "order/total-turn-over-month",
   async (payload, thunkAPI) => {
-    return fetchOrderTotalTurnOver();
+    return fetchOrderTurnOverMonth();
   }
 );
 

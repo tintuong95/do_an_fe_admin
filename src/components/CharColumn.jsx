@@ -10,6 +10,7 @@ const DemoColumn = ({data}) => {
     xField: "type",
     yField: "sales",
     color: "#272727",
+    maintainAspectRatio:false ,
     label: {
       position: "middle",
       style: {

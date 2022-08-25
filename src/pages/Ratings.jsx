@@ -17,7 +17,7 @@ const Ratings = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { ratings } = useSelector((state) => state.ratingsReducer);
-  //modal delete product
+  //modal delete ratings
   const confirm = (id, idProduct) => {
     Modal.confirm({
       title: "Xác nhận",

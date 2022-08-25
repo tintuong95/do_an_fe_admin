@@ -12,7 +12,9 @@ const actionUserGets =createAsyncThunk(
 const actionUserChangeStatus = createAsyncThunk(
   "user/change-status",
   async (payload, thunkAPI) => {
-    return await fetchUserChangeStatus(payload);
+    const res = await fetchUserChangeStatus(payload);
+     thunkAPI.dispatch(actionUserGets());
+    return await res;
   }
 );
 

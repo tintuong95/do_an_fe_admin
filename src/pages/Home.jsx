@@ -87,24 +87,21 @@ const Home = () => {
           <p className=" text-slate-600 text-base">ĐƠN TRONG THÁNG (ĐƠN)</p>
         </div>
       </div>
-      <Row gutter={24}>
-        <Col span={12}>
-          <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-            <ColumnChart data={totalData.slice(-7)} />
-            <p className=" text-slate-600 text-base mt-4 text-center">
-              THÔNG KÊ DOANH SỐ
-            </p>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-            <ColumnChart data={counterData.slice(-7)} />
-            <p className=" text-slate-600 text-base mt-4 text-center">
-              THÔNG KÊ ĐƠN HÀNG
-            </p>
-          </div>
-        </Col>
-      </Row>
+      <div className="grid  grid-cols-2 gap-4">
+        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+          <ColumnChart data={totalData.slice(-7)} />
+          <p className=" text-slate-600 text-base mt-4 text-center">
+            THÔNG KÊ DOANH SỐ
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+          <ColumnChart data={counterData.slice(-7)} />
+          <p className=" text-slate-600 text-base mt-4 text-center">
+            THÔNG KÊ ĐƠN HÀNG
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

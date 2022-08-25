@@ -8,14 +8,34 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { actionOrderDelete, actionOrderGets } from "../modules/order/action.js";
+import { CSVLink } from "react-csv";
+
+
 const { confirm } = Modal;
+
+
+
 const Order = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orderReducer);
+  const [selectionType, setSelectionType] = useState("checkbox");
   //search code
   const [keySearch, setKeySearch] = useState(null);
   const [search, setSearch] = useState(null);
-
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === "Disabled User",
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
   const columns = [
     {
       title: "#",
@@ -67,7 +87,6 @@ const Order = () => {
         }
       },
       sorter: (a, b) => {
-        
         return Number(a.status) > Number(b.status);
       },
     },
@@ -104,9 +123,7 @@ const Order = () => {
             showDeleteConfirm(record.id);
           }}
           icon={<DeleteOutlined />}
-        >
-          
-        </Button>
+        ></Button>
       ),
     },
   ];
@@ -135,7 +152,27 @@ const Order = () => {
   return (
     <>
       <Row justify="space-between mb-4">
-        <Col></Col>
+        <Col>
+          <Button
+            onClick={(e) => {
+              setSearch(keySearch);
+            }}
+            type="primary"
+          >
+            Xuất file excel
+          </Button>
+          <Button
+            className="ml-3"
+            onClick={(e) => {
+              setSearch(keySearch);
+            }}
+            type="primary"
+          >
+            In hàng loạt
+          </Button>
+        
+          ;
+        </Col>
         <Col>
           <div className="flex gap-2">
             <Input
@@ -156,6 +193,10 @@ const Order = () => {
         </Col>
       </Row>
       <Table
+        rowSelection={{
+          type: selectionType,
+          ...rowSelection,
+        }}
         columns={columns}
         dataSource={orders
           .filter((item) => {
@@ -166,6 +207,8 @@ const Order = () => {
           })
           .map((item) => ({
             ...item,
+
+            key: item.id,
             name: item.UserOrder.fullname,
           }))}
       />

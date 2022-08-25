@@ -15,7 +15,9 @@ const actionProductGets =createAsyncThunk(
 const actionProductChangeStatus = createAsyncThunk(
   "product/status-change",
   async (payload, thunkAPI) => {
-    return await fetchProductChangeStatus(payload);
+    const res = fetchProductChangeStatus(payload);
+       thunkAPI.dispatch(actionProductGets());
+    return await res;
   }
 );
 

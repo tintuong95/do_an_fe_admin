@@ -22,6 +22,7 @@ import {
 import { useLocation } from "react-router-dom";
 import uploadPlugin from "../utils/uploadAdapter.js";
 import { actionBlogsUpdate } from "../modules/blog/action.js";
+import validate from "../configs/validate.js";
 
 const { Option } = Select;
 
@@ -35,7 +36,7 @@ const UpdateBlog = () => {
       ...state.data,
     },
   });
-  console.log(state)
+
   //handler
   function onSubmit() {
     const data = new FormData();
@@ -51,26 +52,31 @@ const UpdateBlog = () => {
     dispatch(actionGroupProductGets());
   }, []);
 
-  console.log(state.data);
   return (
     <div className="w-1/2 bg-slate-50 p-8 m-auto rounded">
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">
         Thay đổi bài viết
       </p>
-      <Form layout="vertical" name="nest-messages">
+      <Form layout="vertical" name="nest-messages" onFinish={onSubmit}>
         <Row gutter={12}>
           <Col span={12}>
-            <Form.Item label="Tên sản phẩm">
-              <Input
-                name="title"
-                value={formik.values?.title}
-                onChange={formik.handleChange}
-              />
+            <Form.Item
+              label="Tên sản phẩm"
+              name="title"
+              rules={[validate.required, validate.title]}
+              initialValue={formik.values?.title}
+            >
+              <Input name="title" onChange={formik.handleChange} />
             </Form.Item>
           </Col>
 
           <Col span={12}>
-            <Form.Item label="Loại sản phẩm">
+            <Form.Item
+              label="Loại sản phẩm"
+              name="idGroupProduct"
+              rules={[validate.required]}
+              initialValue={formik.values?.idGroupProduct}
+            >
               <Select
                 value={formik.values.idGroupBlog}
                 style={{ width: "100%" }}
@@ -79,7 +85,6 @@ const UpdateBlog = () => {
                   formik.setFieldValue("idGroupBlog", e);
                 }}
               >
-                <Option value="">Vui lòng chọn</Option>
                 {groupBlogs.map((item, index) => (
                   <Option key={index} value={item.id}>
                     {item.name}
@@ -90,7 +95,7 @@ const UpdateBlog = () => {
           </Col>
 
           <Col span={12}>
-            <Form.Item label="Ảnh đạ diện">
+            <Form.Item label="Ảnh đạ diện" name="image">
               <input
                 id="file_input"
                 type="file"
@@ -103,9 +108,13 @@ const UpdateBlog = () => {
           </Col>
 
           <Col span={24}>
-            <Form.Item label="Mô tả ngắn gọn">
+            <Form.Item
+              label="Mô tả ngắn gọn"
+              name="description"
+              rules={[validate.required, validate.description]}
+              initialValue={formik.values.description}
+            >
               <Input.TextArea
-                value={formik.values.description}
                 rows={5}
                 name="description"
                 onChange={formik.handleChange}
@@ -128,12 +137,7 @@ const UpdateBlog = () => {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Button
-              className="w-full "
-              type="primary"
-              htmlType="button"
-              onClick={onSubmit}
-            >
+            <Button className="w-full " type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Col>

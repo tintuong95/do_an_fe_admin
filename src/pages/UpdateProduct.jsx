@@ -19,6 +19,7 @@ import { actionGroupProductGets } from "../modules/group-product/action.js";
 import { useLocation } from "react-router-dom";
 import uploadPlugin from "../utils/uploadAdapter.js";
 import { actionProductUpdate } from "../modules/product/action.js";
+import validate from "../configs/validate.js";
 
 const { Option } = Select;
 
@@ -59,22 +60,27 @@ const UpdateProduct = () => {
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">
         Thay đổi sản phẩm
       </p>
-      <Form layout="vertical" name="nest-messages">
+      <Form layout="vertical" name="nest-messages" onFinish={onSubmit}>
         <Row gutter={12}>
           <Col span={12}>
-            <Form.Item label="Tên sản phẩm">
-              <Input
-                name="title"
-                value={formik.values?.title}
-                onChange={formik.handleChange}
-              />
+            <Form.Item
+              label="Tên sản phẩm"
+              name="title"
+              rules={[validate.required, validate.title]}
+              initialValue={formik.values?.title}
+            >
+              <Input name="title" onChange={formik.handleChange} />
             </Form.Item>
           </Col>
 
           <Col span={12}>
-            <Form.Item label="Loại sản phẩm">
+            <Form.Item
+              label="Loại sản phẩm"
+              rules={[validate.required]}
+              initialValue={formik.values?.idGroupProduct}
+              name="idGroupProduct"
+            >
               <Select
-                value={formik.values.idGroupProduct}
                 style={{ width: "100%" }}
                 name="idGroupProduct"
                 onChange={(e) => {
@@ -91,25 +97,29 @@ const UpdateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Giá bán">
-              <Input
-                value={formik.values.price}
-                name="price"
-                onChange={formik.handleChange}
-              />
+            <Form.Item
+              label="Giá bán"
+              rules={[validate.required, validate.price]}
+              initialValue={formik.values?.price}
+              name="price"
+            >
+              <Input name="price" onChange={formik.handleChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Đơn vị">
+            <Form.Item
+              label="Đơn vị"
+              rules={[validate.required]}
+              initialValue={formik.values?.unit}
+              name="unit"
+            >
               <Select
-                value={formik.values.unit}
                 style={{ width: "100%" }}
                 name="unit"
                 onChange={(e) => {
                   formik.setFieldValue("unit", e);
                 }}
               >
-                <Option value="lucy">Vui lòng chọn</Option>
                 <Option value="kilogam">Kilogam</Option>
                 <Option value="hop">Hộp</Option>
                 <Option value="cai">Cái</Option>
@@ -143,7 +153,12 @@ const UpdateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item label="Mô tả ngắn gọn">
+            <Form.Item
+              label="Mô tả ngắn gọn"
+              rules={[validate.required, validate.title]}
+              initialValue={formik.values?.description}
+              name="description"
+            >
               <Input.TextArea
                 value={formik.values.description}
                 rows={5}
@@ -171,8 +186,8 @@ const UpdateProduct = () => {
             <Button
               className="w-full "
               type="primary"
-              htmlType="button"
-              onClick={onSubmit}
+              htmlType="submit"
+             
             >
               Xác nhận
             </Button>

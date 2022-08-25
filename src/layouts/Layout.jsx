@@ -9,15 +9,20 @@ import {
 import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import history from "../utils/history.js";
 import { actionAdminProfile } from "../modules/admin/action.js";
 const { Content, Sider } = Layout;
 
 const DashBoard = ({ Component, ...children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const { login } = useSelector((state) => state.adminReducer);
   const dispatch = useDispatch();
-  dispatch(actionAdminProfile());
+
+  if (!login) {
+    dispatch(actionAdminProfile());
+  }
+
   return (
     <Layout
       style={{
@@ -30,7 +35,11 @@ const DashBoard = ({ Component, ...children }) => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <img className="w-2/3 m-auto mt-4" src={require("../assets/image/logo.PNG")} alt="" />
+        <img
+          className="w-2/3 m-auto mt-4"
+          src={require("../assets/image/logo.PNG")}
+          alt=""
+        />
         <hr className="w-4/5 m-auto  border-y-slate-100 my-4"></hr>
         <Menu theme="dark" mode="inline">
           <Menu.Item

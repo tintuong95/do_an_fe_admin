@@ -17,6 +17,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { actionGroupProductGets } from "../modules/group-product/action.js";
 import { actionProductCreate } from "../modules/product/action.js";
 import uploadPlugin from "../utils/uploadAdapter.js";
+import validate from "../configs/validate.js";
 
 const { Option } = Select;
 
@@ -29,8 +30,7 @@ const CreateProduct = () => {
     initialValues: {},
   });
 
-  //handler
-  function onSubmit() {
+  const onFinish = () => {
     const data = new FormData();
     Object.entries(formik.values).map((item) => {
       if (item[0] == "images") {
@@ -42,7 +42,7 @@ const CreateProduct = () => {
       }
     });
     dispatch(actionProductCreate(data));
-  }
+  };
 
   useEffect(() => {
     dispatch(actionGroupProductGets());
@@ -53,25 +53,37 @@ const CreateProduct = () => {
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">
         Tạo mới sản phẩm
       </p>
-      <Form layout="vertical" name="nest-messages">
+      <Form
+        layout="vertical"
+        name="nest-messages"
+        onFinish={onFinish}
+     
+      >
         <Row gutter={12}>
           <Col span={12}>
-            <Form.Item label="Tên sản phẩm">
+            <Form.Item
+              label="Tên sản phẩm"
+              name="title"
+              rules={[validate.required, validate.title]}
+            >
               <Input name="title" onChange={formik.handleChange} />
             </Form.Item>
           </Col>
 
           <Col span={12}>
-            <Form.Item label="Loại sản phẩm">
+            <Form.Item
+              label="Loại sản phẩm"
+              name="idGroupProduct"
+              rules={[validate.required]}
+            >
               <Select
-                defaultValue="lucy"
+                placeholder="Vui lòng nhập"
                 style={{ width: "100%" }}
                 name="idGroupProduct"
                 onChange={(e) => {
                   formik.setFieldValue("idGroupProduct", e);
                 }}
               >
-                <Option value="lucy">Vui lòng chọn</Option>
                 {groupProducts.map((item, index) => (
                   <Option key={index} value={item.id}>
                     {item.name}
@@ -81,21 +93,24 @@ const CreateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Giá bán">
+            <Form.Item
+              label="Giá bán"
+              name="price"
+              rules={[validate.required, validate.price]}
+            >
               <Input name="price" onChange={formik.handleChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Đơn vị">
+            <Form.Item label="Đơn vị" name="unit" rules={[validate.required]}>
               <Select
-                defaultValue="lucy"
                 style={{ width: "100%" }}
                 name="unit"
                 onChange={(e) => {
                   formik.setFieldValue("unit", e);
                 }}
+                placeholder="Vui lòng chọn"
               >
-                <Option value="lucy">Vui lòng chọn</Option>
                 <Option value="kilogam">Kilogam</Option>
                 <Option value="hop">Hộp</Option>
                 <Option value="cai">Cái</Option>
@@ -104,7 +119,11 @@ const CreateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Ảnh đạ diện">
+            <Form.Item
+              label="Ảnh đạ diện"
+              name="image"
+              rules={[validate.required]}
+            >
               <input
                 id="file_input"
                 type="file"
@@ -116,7 +135,11 @@ const CreateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Album ảnh">
+            <Form.Item
+              label="Album ảnh"
+              name="images"
+              rules={[validate.required]}
+            >
               <input
                 id="file_input"
                 type="file"
@@ -129,7 +152,11 @@ const CreateProduct = () => {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item label="Mô tả ngắn gọn">
+            <Form.Item
+              label="Mô tả ngắn gọn"
+              name="description"
+              rules={[validate.required, validate.description]}
+            >
               <Input.TextArea
                 rows={5}
                 name="description"
@@ -157,8 +184,8 @@ const CreateProduct = () => {
             <Button
               className="w-full"
               type="primary"
-              htmlType="button"
-              onClick={onSubmit}
+              htmlType="submit"
+              
             >
               Xác nhận
             </Button>
