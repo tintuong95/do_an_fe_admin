@@ -1,5 +1,5 @@
 import DashBoard from "./layouts/Layout.jsx";
-import {Route,Switch} from "react-router-dom"
+import { Route, Switch } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Product from "./pages/Product.jsx";
 import CreateProduct from "./pages/CreateProduct.jsx";
@@ -16,10 +16,12 @@ import Users from "./pages/Users.jsx";
 import Ratings from "./pages/Ratings.jsx";
 import CommentProduct from "./pages/CommentProduct.jsx";
 import CommentBlog from "./pages/CommentBlog.jsx";
+import Print from "./components/Print.jsx";
 
 function AppRouter() {
   return (
     <Switch>
+      <DashBoard path="/print" Component={Print} />
       <Route path="/login" component={Login} />
       <DashBoard path="/ratings/:id" Component={Ratings} />
       <DashBoard path="/comment/product/:id" Component={CommentProduct} />

@@ -1,8 +1,9 @@
 import { Button } from "antd";
 import React from "react";
 import { useLocation } from "react-router-dom";
+import history from "../utils/history.js";
 
-const DetailOrder = (props) => {
+const DetailOrder = () => {
   const { state } = useLocation();
 
   return (
@@ -134,7 +135,16 @@ const DetailOrder = (props) => {
         </div>
 
         <div className="flex-1">
-          <Button className="w-full " type="primary">
+          <Button
+            onClick={() => {
+              history.push({
+                pathname: "/print",
+                state: [state],
+              });
+            }}
+            className="w-full "
+            type="primary"
+          >
             In hóa đơn
           </Button>
         </div>

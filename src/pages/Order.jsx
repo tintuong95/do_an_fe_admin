@@ -8,33 +8,26 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { actionOrderDelete, actionOrderGets } from "../modules/order/action.js";
-import { CSVLink } from "react-csv";
-
+import ExportExcel from "../components/ExportExcel.jsx";
+import makeid from "../utils/rand.js";
+import Print from "../components/Print.jsx";
+import history from "../utils/history.js";
 
 const { confirm } = Modal;
-
-
 
 const Order = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orderReducer);
-  const [selectionType, setSelectionType] = useState("checkbox");
+  //print
+  const [data, setData] = useState();
+
   //search code
   const [keySearch, setKeySearch] = useState(null);
   const [search, setSearch] = useState(null);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+      setData(selectedRows);
     },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
-      name: record.name,
-    }),
   };
   const columns = [
     {
@@ -148,30 +141,22 @@ const Order = () => {
   useEffect(() => {
     dispatch(actionOrderGets());
   }, []);
-
+  console.log(data);
   return (
     <>
       <Row justify="space-between mb-4">
-        <Col>
+        <Col className="flex gap-2">
+          <ExportExcel csvData={data} fileName={makeid(5)} />
           <Button
-            onClick={(e) => {
-              setSearch(keySearch);
+            onClick={() => {
+              history.push({
+                pathname: "/print",
+                state: data,
+              });
             }}
-            type="primary"
           >
-            Xuất file excel
+            In hang loạt
           </Button>
-          <Button
-            className="ml-3"
-            onClick={(e) => {
-              setSearch(keySearch);
-            }}
-            type="primary"
-          >
-            In hàng loạt
-          </Button>
-        
-          ;
         </Col>
         <Col>
           <div className="flex gap-2">
@@ -194,7 +179,6 @@ const Order = () => {
       </Row>
       <Table
         rowSelection={{
-          type: selectionType,
           ...rowSelection,
         }}
         columns={columns}
