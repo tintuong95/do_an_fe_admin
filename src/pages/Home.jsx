@@ -94,7 +94,7 @@ const Home = () => {
             THÔNG KÊ DOANH SỐ
           </p>
         </div>
-
+      
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
           <ColumnChart data={counterData.slice(-7)} />
           <p className=" text-slate-600 text-base mt-4 text-center">

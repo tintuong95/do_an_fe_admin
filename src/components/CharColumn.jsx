@@ -11,6 +11,7 @@ const DemoColumn = ({data}) => {
     yField: "sales",
     color: "#272727",
     maintainAspectRatio:false ,
+    height:250,
     label: {
       position: "middle",
       style: {
