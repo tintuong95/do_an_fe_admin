@@ -18,13 +18,13 @@ import {
   actionUserGets,
   actionUserRemove,
 } from "../modules/user/action.js";
-import history from "../utils/history.js";
+import { refeshUsers } from "../modules/user/reducer.js";
 
 const Users = () => {
   const { users } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   //search name
-  const [keySearch, setKeySearch] = useState(null);
+  const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState(null);
 
   //modal delete product
@@ -110,7 +110,7 @@ const Users = () => {
       key: "status",
       dataIndex: "status",
       render: (text, record) => {
-        console.log(record)
+        console.log(record);
         return (
           <Switch
             onChange={() => {
@@ -150,7 +150,10 @@ const Users = () => {
   ];
 
   useEffect(() => {
-    dispatch(actionUserGets());
+    dispatch(actionUserGets({ limit: 10, offset }));
+    return ()=>{
+      dispatch(refeshUsers())
+    }
   }, []);
 
   return (
@@ -161,13 +164,15 @@ const Users = () => {
           <div className="flex gap-2">
             <Input
               onChange={(e) => {
-                setKeySearch(e.target.value);
+                setSearch(e.target.value);
               }}
               placeholder="Nhập tên tài khoản"
             />
             <Button
               onClick={(e) => {
-                setSearch(keySearch);
+                dispatch(refeshUsers());
+                dispatch(actionUserGets({ limit: 10, offset: 0, search }));
+                setOffset(0);
               }}
               type="primary"
             >
@@ -178,19 +183,29 @@ const Users = () => {
       </Row>
       <div className="my-4"></div>
       <Table
+        pagination={false}
         columns={columns}
-        dataSource={users
-          .filter((item) => {
-            if (!search) return true;
-            else {
-              return item.username.toLowerCase().includes(search.toLowerCase());
-            }
-          })
-          .map((item) => ({
-            ...item,
-            key: item.id,
-          }))}
+        dataSource={users.map((item) => ({
+          ...item,
+          key: item.id,
+        }))}
       />
+      <div className="my-4">
+        <button
+          onClick={() => {
+            if (search) {
+              dispatch(
+                actionUserGets({ limit: 10, offset: offset + 10, search })
+              );
+            } else {
+              dispatch(actionUserGets({ limit: 10, offset: offset + 10 }));
+            }
+            setOffset(offset + 10);
+          }}
+        >
+          Xem thêm
+        </button>
+      </div>
     </>
   );
 };

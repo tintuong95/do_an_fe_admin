@@ -30,7 +30,7 @@ function AppRouter() {
       <DashBoard path="/chat" Component={Chat} />
       <DashBoard path="/orders/:id" Component={DetailOrder} />
       <DashBoard path="/orders" Component={Order} />
-      <DashBoard path="/update-product" Component={UpdateProduct} />
+      <DashBoard path="/update-product/:id" Component={UpdateProduct} />
       <DashBoard path="/create-product" Component={CreateProduct} />
       <DashBoard path="/update-blog" Component={UpdateBlog} />
       <DashBoard path="/create-blog" Component={CreateBlogs} />

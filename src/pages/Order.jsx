@@ -10,8 +10,9 @@ import {
 import { actionOrderDelete, actionOrderGets } from "../modules/order/action.js";
 import ExportExcel from "../components/ExportExcel.jsx";
 import makeid from "../utils/rand.js";
-import Print from "../components/Print.jsx";
+
 import history from "../utils/history.js";
+import { refeshOrder } from "../modules/order/reducer.js";
 
 const { confirm } = Modal;
 
@@ -22,7 +23,7 @@ const Order = () => {
   const [data, setData] = useState();
 
   //search code
-  const [keySearch, setKeySearch] = useState(null);
+  const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState(null);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -139,7 +140,10 @@ const Order = () => {
   };
 
   useEffect(() => {
-    dispatch(actionOrderGets());
+    dispatch(actionOrderGets({ limit: 10, offset }));
+    return () => {
+      dispatch(refeshOrder());
+    };
   }, []);
   console.log(data);
   return (
@@ -162,13 +166,15 @@ const Order = () => {
           <div className="flex gap-2">
             <Input
               onChange={(e) => {
-                setKeySearch(e.target.value);
+                setSearch(e.target.value);
               }}
               placeholder="Nhập tên sản phẩm"
             />
             <Button
               onClick={(e) => {
-                setSearch(keySearch);
+                dispatch(refeshOrder());
+                dispatch(actionOrderGets({ limit: 10, offset: 0, search }));
+                setOffset(0);
               }}
               type="primary"
             >
@@ -178,24 +184,33 @@ const Order = () => {
         </Col>
       </Row>
       <Table
+        pagination={false}
         rowSelection={{
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={orders
-          .filter((item) => {
-            if (!search) return true;
-            else {
-              return item.code.toLowerCase().includes(search.toLowerCase());
-            }
-          })
-          .map((item) => ({
-            ...item,
-
-            key: item.id,
-            name: item.UserOrder.fullname,
-          }))}
+        dataSource={orders.map((item) => ({
+          ...item,
+          key: item.id,
+          name: item.UserOrder.fullname,
+        }))}
       />
+      <div className="my-4">
+        <button
+          onClick={() => {
+            if (search) {
+              dispatch(
+                actionOrderGets({ limit: 10, offset: offset + 10, search })
+              );
+            } else {
+              dispatch(actionOrderGets({ limit: 10, offset: offset + 10 }));
+            }
+            setOffset(offset + 10);
+          }}
+        >
+          Xem thêm
+        </button>
+      </div>
     </>
   );
 };

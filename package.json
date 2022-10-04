@@ -4,12 +4,11 @@
     "private": true,
     "dependencies": {
         "@ant-design/charts": "^1.4.2",
-        "@ckeditor/ckeditor5-build-classic": "^35.0.1",
         "@ckeditor/ckeditor5-react": "^5.0.2",
-        "@ckeditor/ckeditor5-upload": "^35.0.1",
         "@reduxjs/toolkit": "^1.8.4",
         "antd": "^4.22.4",
         "axios": "^0.27.2",
+        "ckeditor5-custom-build": "file:./src/libs/ckeditor5",
         "emotion": "^11.0.0",
         "file-saver": "^2.0.5",
         "firebase": "^9.9.2",
@@ -30,7 +29,7 @@
         "xlsx": "^0.18.5"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "set PORT=3001 && react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

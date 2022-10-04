@@ -25,12 +25,13 @@ import {
   actionBlogsUpdate,
 } from "../modules/blog/action";
 import history from "../utils/history.js";
+import { refeshBlogs } from "../modules/blog/reducer.js";
 
 const Blogs = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.blogReducer.blogs);
   //search name
-  const [keySearch, setKeySearch] = useState(null);
+  const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState(null);
 
   //modal delete product
@@ -56,17 +57,14 @@ const Blogs = () => {
       dataIndex: "image",
       key: "image",
       render: (text, record, index) => (
-        <img
-          src={process.env.REACT_APP_HOST + "/img/blog/" + text}
-          alt={record.title}
-          className="photo"
-        />
+        <img src={text} alt={record.title} className="photo" />
       ),
     },
     {
       title: "Tiêu đề",
       dataIndex: "title",
       key: "title",
+      width: "25%",
       sorter: (a, b) => {
         if (a.title < b.title) {
           return -1;
@@ -81,14 +79,17 @@ const Blogs = () => {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
-      render: (text, record, index) => (
-        <Switch
-          onChange={() => {
-            dispatch(actionBlogsChangeStatus({ id: record.id }));
-          }}
-          defaultChecked={text == "0" ? true : false}
-        />
-      ),
+      render: (text, record, index) => {
+        console.log(text)
+        return (
+          <Switch
+            onChange={() => {
+              dispatch(actionBlogsChangeStatus({ id: record.id }));
+            }}
+            defaultChecked={text == "0" ? true : false}
+          />
+        );
+      },
       sorter: (a, b) => {
         return Number(a) > Number(b);
       },
@@ -146,7 +147,10 @@ const Blogs = () => {
   ];
 
   useEffect(() => {
-    dispatch(actionBlogsGets());
+    dispatch(actionBlogsGets({ limit: 10, offset }));
+    return ()=>{
+      dispatch(refeshBlogs());
+    }
   }, []);
 
   //console.log(blogs);
@@ -167,13 +171,15 @@ const Blogs = () => {
           <div className="flex gap-2">
             <Input
               onChange={(e) => {
-                setKeySearch(e.target.value);
+               setSearch(e.target.value);
               }}
               placeholder="Nhập tên sản phẩm"
             />
             <Button
               onClick={(e) => {
-                setSearch(keySearch);
+                dispatch(refeshBlogs())
+                dispatch(actionBlogsGets({limit:10,offset:0,search}))
+                setOffset(0)
               }}
               type="primary"
             >
@@ -185,21 +191,23 @@ const Blogs = () => {
 
       <div className="my-4"></div>
       <Table
+        pagination={false}
         columns={columns}
-        dataSource={posts
-          .filter((item) => {
-            if (!search) return true;
-            else {
-              return item.title.toLowerCase().includes(search.toLowerCase());
-            }
-          })
-          .map((item, index) => {
-            return {
-              ...item,
-              key: item.id,
-            };
-          })}
+        dataSource={posts.map((item, index) => {
+          return {
+            ...item,
+            key: item.id,
+          };
+        })}
       />
+      <div className="my-4" onClick={()=>{
+        if(search){
+          dispatch(actionBlogsGets({ limit: 10, offset: offset + 10,search }));
+        }else{
+          dispatch(actionBlogsGets({ limit: 10, offset: offset + 10 }));
+        }
+        setOffset(offset+10)
+      }}><button>Xem thêm</button></div>
     </>
   );
 };

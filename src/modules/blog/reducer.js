@@ -16,12 +16,17 @@ const initialState = {
 export const spliceBlogs = createSlice({
   name: "blogs",
   initialState,
+  reducers: {
+    refeshBlogs: (state) => {
+      state.blogs = [];
+    },
+  },
   extraReducers: (builder) => {
     // Gets Blogs success
     builder.addCase(
       actionBlogsGets.fulfilled,
       (state, { meta, payload, type }) => {
-        state.blogs = payload.data;
+        state.blogs = state.blogs.concat(payload.data);
       }
     );
 
@@ -101,4 +106,4 @@ export const spliceBlogs = createSlice({
   },
 });
 
-export const {} = spliceBlogs.actions;
+export const { refeshBlogs } = spliceBlogs.actions;

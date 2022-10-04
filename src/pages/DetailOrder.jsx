@@ -7,7 +7,7 @@ const DetailOrder = () => {
   const { state } = useLocation();
 
   return (
-    <div className="overflow-x-auto relative w-1/3 m-auto shadow-md bg-slate-50 p-8">
+    <div className="overflow-x-auto relative w-3/5 m-auto shadow-md bg-slate-50 p-8">
       <p className="text-base text-gray-500  mb-4">Thông tin khách hàng</p>
       <table className="w-full text-sm text-left text-gray-500 ">
         <tbody>
@@ -59,7 +59,7 @@ const DetailOrder = () => {
               <tr className="bg-white border-b  ">
                 <th
                   scope="row"
-                  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap "
+                  className="py-4 px-6  font-medium text-gray-900 whitespace-nowrap "
                 >
                   {item.OrderItemProduct.title}
                 </th>
@@ -69,7 +69,10 @@ const DetailOrder = () => {
                   {Number(item.OrderItemProduct.price).toLocaleString("vi-VN")}
                 </td>
                 <td className="py-4 px-6">
-                  {item.total.toLocaleString("vi-VN")} đ
+                  {(item.OrderItemProduct.price * item.quantity).toLocaleString(
+                    "vi-VN"
+                  )}{" "}
+                  đ
                 </td>
               </tr>
             );

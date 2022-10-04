@@ -24,16 +24,17 @@ import {
   actionProductRemove,
 } from "../modules/product/action.js";
 import history from "../utils/history.js";
+import { refeshProducts } from "../modules/product/reducer.js";
 
 const Product = () => {
   const { products } = useSelector((state) => state.productReducer);
   //search name
-  const [keySearch, setKeySearch] = useState(null);
+ 
   const [search, setSearch] = useState(null);
-
+  const [offset, setOffset] = useState(0);
   const dispatch = useDispatch();
   //modal delete product
-  const confirm = (id) => {
+  const confirm = (id,offset) => {
     Modal.confirm({
       title: "Xác nhận",
       icon: <ExclamationCircleOutlined />,
@@ -56,13 +57,7 @@ const Product = () => {
       title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
-      render: (text) => (
-        <img
-          className="photo"
-          src={process.env.REACT_APP_HOST + "/img/product/" + text}
-          alt="photo1"
-        />
-      ),
+      render: (text) => <img className="photo" src={text} alt="photo1" />,
     },
     {
       title: "Tên sản phẩm",
@@ -92,10 +87,15 @@ const Product = () => {
       title: "Trạng thái",
       key: "status",
       dataIndex: "status",
-      render: (text,record) => {
-        return <Switch defaultChecked={text == "0" ? false : true}  onChange={()=>{
-          dispatch(actionProductChangeStatus({id:record.id}));
-        }}/>;
+      render: (text, record) => {
+        return (
+          <Switch
+            defaultChecked={text == "0" ? false : true}
+            onChange={() => {
+              dispatch(actionProductChangeStatus({ id: record.id }));
+            }}
+          />
+        );
       },
       sorter: (a, b) => {
         return Number(a) > Number(b);
@@ -147,11 +147,10 @@ const Product = () => {
       render: (text) => (
         <Link
           to={{
-            pathname: "/update-product",
-            state: { data: text },
+            pathname: "/update-product/" + text.id,
           }}
         >
-          <Button type="dashed" icon={<EditOutlined/>}></Button>
+          <Button type="dashed" icon={<EditOutlined />}></Button>
         </Link>
       ),
     },
@@ -163,18 +162,19 @@ const Product = () => {
           type="dashed"
           danger
           onClick={() => {
-            confirm(text.id);
+            confirm(text.id,offset);
           }}
-          icon={<DeleteOutlined/>}
-        >
-          
-        </Button>
+          icon={<DeleteOutlined />}
+        ></Button>
       ),
     },
   ];
 
   useEffect(() => {
-    dispatch(actionProductGets());
+    dispatch(actionProductGets({ limit: 10, offset }));
+    return () => {
+      dispatch(refeshProducts());
+    };
   }, []);
 
   return (
@@ -194,13 +194,16 @@ const Product = () => {
           <div className="flex gap-2">
             <Input
               onChange={(e) => {
-                setKeySearch(e.target.value);
+                setSearch(e.target.value);
               }}
               placeholder="Nhập tên sản phẩm"
             />
             <Button
               onClick={(e) => {
-                setSearch(keySearch);
+                // setSearch(keySearch);
+                dispatch(refeshProducts())
+                dispatch(actionProductGets({ limit: 10, offset: 0,search }));
+                setOffset(0)
               }}
               type="primary"
             >
@@ -211,19 +214,26 @@ const Product = () => {
       </Row>
       <div className="mt-5">
         <Table
+          pagination={false}
           columns={columns}
-          dataSource={products
-            .filter((item) => {
-              if (!search) return true;
-              else {
-                return item.title.toLowerCase().includes(search.toLowerCase());
-              }
-            })
-            .map((item) => ({
-              ...item,
-              key: item.id,
-            }))}
+          dataSource={products.map((item) => ({
+            ...item,
+            key: item.id,
+          }))}
         />
+        <div
+          className="my-4"
+          onClick={() => {
+            if(search){
+              dispatch(actionProductGets({ limit: 10, offset: offset + 10,search }));
+            }else{
+              dispatch(actionProductGets({ limit: 10, offset: offset + 10 }));
+            }
+            setOffset(offset + 10);
+          }}
+        >
+          <button>Xem thêm</button>
+        </div>
       </div>
     </>
   );

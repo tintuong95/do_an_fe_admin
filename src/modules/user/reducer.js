@@ -12,14 +12,18 @@ export const spliceUser = createSlice({
   initialState,
 
   //handler reducer local
-  reducers: {},
+  reducers: {
+    refeshUsers:(state)=>{
+      state.users=[]
+    }
+  },
   //handler reducer global
   extraReducers: (builder) => {
     //gets  user success
     builder.addCase(
       actionUserGets.fulfilled,
       (state, { meta, payload, type }) => {
-        state.users = payload.data;
+        state.users = state.users.concat(payload.data);
       }
     );
     //gets  user fail
@@ -112,4 +116,4 @@ export const spliceUser = createSlice({
 });
 
 
-export const {} = spliceUser.actions
+export const { refeshUsers } = spliceUser.actions;

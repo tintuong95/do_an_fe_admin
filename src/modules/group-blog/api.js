@@ -3,7 +3,7 @@ import fetchAxios from "../../configs/axios.js";
 async function fetchGroupBlogGets() {
   return await fetchAxios({
     method: "get",
-    url: "/groupblog",
+    url: "/group-blog",
   });
 }
 

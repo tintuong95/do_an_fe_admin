@@ -3,7 +3,7 @@ import fetchAxios from "../../configs/axios";
 async function fetchCommentBlogsGets(payload) {
   return await fetchAxios({
     method: "get",
-    url: "/commentblog?idBlog=" + payload.idBlog,
+    url: "/comment-blog?idBlog=" + payload.idBlog,
   });
 }
 
@@ -12,7 +12,7 @@ async function fetchCommentBlogsGets(payload) {
 async function fetchCommentBlogsRemove(payload) {
   return await fetchAxios({
     method: "delete",
-    url: "/commentblog/" + payload.id,
+    url: "/comment-blog/" + payload.id,
   });
 }
 

@@ -1,9 +1,12 @@
 import fetchAxios from "../../configs/axios.js";
 
-async function fetchProductGets() {
+async function fetchProductGets(payload) {
+  const query = Object.entries(payload)
+    .map((item) => item[0] + "=" + item[1])
+    .join("&");
   return await fetchAxios({
     method: "get",
-    url: "/product",
+    url: "/product?" + query,
   });
 }
 

@@ -12,14 +12,18 @@ export const spliceProduct = createSlice({
   initialState,
 
   //handler reducer local
-  reducers: {},
+  reducers: {
+    refeshProducts:(state)=>{
+      state.products=[]
+    }
+  },
   //handler reducer global
   extraReducers: (builder) => {
     //gets group product success
     builder.addCase(
       actionProductGets.fulfilled,
       (state, { meta, payload, type }) => {
-        state.products = payload.data;
+        state.products = state.products.concat(payload.data);
       }
     );
     //gets group product fail
@@ -111,4 +115,4 @@ export const spliceProduct = createSlice({
 });
 
 
-export const {} = spliceProduct.actions
+export const { refeshProducts } = spliceProduct.actions;

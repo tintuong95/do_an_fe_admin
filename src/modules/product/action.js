@@ -7,11 +7,12 @@ import {
   fetchProductRemove,
   fetchProductUpdate,
 } from "./api.js";
+import { refeshProducts } from "./reducer.js";
 
 const actionProductGets = createAsyncThunk(
   "product/gets",
   async (payload, thunkAPI) => {
-    return await fetchProductGets();
+    return await fetchProductGets(payload);
   }
 );
 
@@ -19,7 +20,7 @@ const actionProductChangeStatus = createAsyncThunk(
   "product/status-change",
   async (payload, thunkAPI) => {
     const res = fetchProductChangeStatus(payload);
-    thunkAPI.dispatch(actionProductGets());
+    // thunkAPI.dispatch(actionProductGets());
     return await res;
   }
 );
@@ -49,7 +50,7 @@ const actionProductRemove = createAsyncThunk(
   "product/remove",
   async (payload, thunkAPI) => {
     const response = await fetchProductRemove(payload.id);
-    thunkAPI.dispatch(actionProductGets());
+   
     return response;
   }
 );

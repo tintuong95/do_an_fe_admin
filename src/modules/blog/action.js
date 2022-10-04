@@ -4,7 +4,7 @@ import {fetchBlogsChangeStatus, fetchBlogsGets, fetchBlogsPost, fetchBlogsRemove
 const actionBlogsGets = createAsyncThunk(
     'blog/gets',
     async (payload, thunkAPI) => {
-        return await fetchBlogsGets();
+        return await fetchBlogsGets(payload);
     }
 )
 
@@ -13,7 +13,7 @@ const actionBlogsChangeStatus = createAsyncThunk(
   "blog/change-status",
   async (payload, thunkAPI) => {
     const res = await fetchBlogsChangeStatus(payload);
-      thunkAPI.dispatch(actionBlogsGets());
+      // thunkAPI.dispatch(actionBlogsGets());
     return await res;
   }
 );
@@ -41,7 +41,7 @@ const actionBlogsRemove = createAsyncThunk(
   async (payload, thunkAPI) => {
     const response = await fetchBlogsRemove(payload);
 
-    thunkAPI.dispatch(actionBlogsGets());
+    // thunkAPI.dispatch(actionBlogsGets());
     return await response;
   }
 );

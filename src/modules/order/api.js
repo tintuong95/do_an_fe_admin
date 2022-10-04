@@ -1,9 +1,12 @@
 import fetchAxios from "../../configs/axios.js";
 
-async function fetchOrderGets() {
+async function fetchOrderGets(payload) {
+  const query = Object.entries(payload)
+    .map((item) => item[0] + "=" + item[1])
+    .join("&");
   return await fetchAxios({
     method: "GET",
-    url: "/order",
+    url: "/order?" + query,
   });
 }
 
@@ -54,6 +57,22 @@ async function fetchOrderCounterData() {
     url: "/order/total-counter-data",
   });
 }
+
+async function fetchOrderCounterWeekData() {
+  return await fetchAxios({
+    method: "get",
+    url: "/order/total-counter-week-data",
+  });
+}
+
+async function fetchOrderTurnOverWeekData() {
+  return await fetchAxios({
+    method: "get",
+    url: "/order/total-turn-over-week-data",
+  });
+}
+
+
 export {
   fetchOrderGets,
   fetchOrderRemove,
@@ -63,4 +82,6 @@ export {
   fetchOrderTotalCouter,
   fetchOrderTotalData,
   fetchOrderCounterData,
+  fetchOrderCounterWeekData,
+  fetchOrderTurnOverWeekData,
 };

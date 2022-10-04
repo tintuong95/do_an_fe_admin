@@ -2,13 +2,12 @@ import { Button, Col, Form, Input, Row, Select } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import uploadPlugin from "../utils/uploadAdapter.js";
+
 import { actionBlogsPost } from "../modules/blog/action.js";
 import { actionGroupBlogGets } from "../modules/group-blog/action.js";
 import validate from "../configs/validate.js";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 const { Option } = Select;
 
 const CreateBlogs = () => {
@@ -20,13 +19,7 @@ const CreateBlogs = () => {
     initialValues: {},
   });
 
-  //handler
-  function onSubmit() {
-    
-  }
-  const onFinishFailed = () => {
-    console.log("fail");
-  };
+
   const onFinish = () => {
    const data = new FormData();
    Object.entries(formik.values).map((item) => {
@@ -40,103 +33,108 @@ const CreateBlogs = () => {
   }, []);
 
   return (
-    <div className="w-1/2 m-auto bg-slate-50 p-8">
+    <div className=" m-auto bg-slate-50 p-8" style={{width:720}}>
       <p className="font-semibold text-lg text-neutral-500 mb-4 ">
         Tạo mới tin tức
       </p>
-      <Form
-        layout="vertical"
-        name="nest-messages"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
+     
+      <form
+        className="w-full "
+        method="POST"
+        onSubmit={(e) => {
+          e.preventDefault();
+          onFinish();
+        }}
       >
-        <Row gutter={12}>
-          <Col span={12}>
-            <Form.Item
-              label="Tên bài viết"
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3 mb-2 m">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Tiêu đề
+            </label>
+            <input
               name="title"
-              rules={[validate.required, validate.title]}
-            >
-              <Input name="title" onChange={formik.handleChange} />
-            </Form.Item>
-          </Col>
+              onChange={formik.handleChange}
+           
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+            />
+          </div>
+          <div className="w-full px-3 mb-2 ">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Thể loại
+            </label>
 
-          <Col span={12}>
-            <Form.Item
-              label="Loại bài viết"
+            <select
+              value={formik.values?.idGroupBlog}
               name="idGroupBlog"
-              rules={[validate.required]}
+              onChange={formik.handleChange}
+              className=" appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
             >
-              <Select
-                placeholder="Vui lòng chọn"
-                style={{ width: "100%" }}
-                name="idGroupBlog"
-                onChange={(e) => {
-                  formik.setFieldValue("idGroupBlog", e);
-                }}
-              >
-                {groupBlogs.map((item, index) => (
-                  <Option key={index} value={item.id}>
-                    {item.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Form.Item
-              label="Ảnh đạ diện"
+              <option value="">Vui lòng chọn</option>
+              {groupBlogs.map((item, index) => (
+                <option key={index} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="w-full px-3 mb-2 ">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              ẢNH ĐẠI DIỆN
+            </label>
+            <input
+              type="file"
+              required="required"
               name="image"
-              rules={[validate.required]}
-            >
-              <input
-                id="file_input"
-                type="file"
-                name="image"
-                onChange={(e) => {
-                  formik.setFieldValue("image", e.target.files[0]);
-                }}
-              ></input>
-            </Form.Item>
-          </Col>
-
-          <Col span={24}>
-            <Form.Item
-              label="Mô tả ngắn gọn"
+              onChange={(e) => {
+                formik.setFieldValue("image", e.target.files[0]);
+              }}
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+            />
+          </div>
+        
+          <div className="w-full px-3 mb-2 ">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              MÔ TẢ NGẮN GỌN
+            </label>
+            <textarea
+              pattern={validate.description}
+              required="required"
               name="description"
-              rules={[validate.required, validate.description]}
+              onChange={formik.handleChange}
+           
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+            />
+          </div>
+          <div className="w-full px-3 mb-2 ">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              NỘI DUNG
+            </label>
+            <CKEditor
+              editor={Editor}
+              data={formik.values.detail}
+              onChange={(event, editor) => {
+                formik.setFieldValue("detail", editor.getData());
+              }}
+              config={{
+                ckfinder: {
+                  uploadUrl:
+                    process.env.REACT_APP_HOST + "/blog/upload-image",
+                  withCredentials: true,
+                },
+              }}
+            />
+          </div>
+          <div className="w-full px-3 mb-2 ">
+            <button
+              type="submit"
+              className="text-white mt-3 w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
-              <Input.TextArea
-                rows={5}
-                name="description"
-                onChange={formik.handleChange}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item label="Bài viết sản phẩm">
-              <CKEditor
-                editor={ClassicEditor}
-                data="<p>Hello from CKEditor 5!</p>"
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-
-                  formik.setFieldValue("detail", data);
-                }}
-                config={{
-                  extraPlugins: [uploadPlugin],
-                }}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Button className="w-full" type="primary" htmlType="submit">
-              Xác nhận
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+              XÁC NHẬN
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };

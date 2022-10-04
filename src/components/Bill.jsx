@@ -61,7 +61,11 @@ const Bill = ({data}) => {
                     "vi-VN"
                   )}
                 </td>
-                <td class="py-2 ">{item?.total.toLocaleString("vi-VN")}</td>
+                <td class="py-2 ">
+                  {(
+                    item?.OrderItemProduct?.price * item?.quantity
+                  ).toLocaleString("vi-VN")}
+                </td>
               </tr>
             );
           })}

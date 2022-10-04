@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchOrderCounterData, fetchOrderCounterMonth, fetchOrderGetAll, fetchOrderGets, fetchOrderRemove, fetchOrderTotalCouter, fetchOrderTotalData, fetchOrderTotalTurnOver, fetchOrderTurnOverMonth } from "./api.js";
+import { fetchOrderCounterData, fetchOrderCounterMonth, fetchOrderCounterWeekData, fetchOrderGetAll, fetchOrderGets, fetchOrderRemove, fetchOrderTotalCouter, fetchOrderTotalData, fetchOrderTotalTurnOver, fetchOrderTurnOverMonth, fetchOrderTurnOverWeekData } from "./api.js";
 
 
 
 const actionOrderGets =createAsyncThunk(
     "order/gets",
     async (payload,thunkAPI)=>{
-        return fetchOrderGets()
+      
+        return fetchOrderGets(payload)
     }
 )
 
@@ -55,6 +56,21 @@ const actionOrderCounterMonth = createAsyncThunk(
   }
 );
 
+const actionOrderCounterWeekData = createAsyncThunk(
+  "order/total-week-counter",
+  async (payload, thunkAPI) => {
+    return fetchOrderCounterWeekData();
+  }
+);
+
+const actionOrderTurnOverWeekData = createAsyncThunk(
+  "order/total-week-turn-over",
+  async (payload, thunkAPI) => {
+    return fetchOrderTurnOverWeekData();
+  }
+);
+
+
 
 
 
@@ -64,7 +80,7 @@ const actionOrderDelete = createAsyncThunk(
     async (payload,thunkAPI)=>{
 
         const response =await fetchOrderRemove(payload)
-        thunkAPI.dispatch(actionOrderGets());
+        // thunkAPI.dispatch(actionOrderGets());
         
          return response;
     }
@@ -79,4 +95,6 @@ export {
   actionOrderTotalCounter,
   actionOrderTotalData,
   actionOrderCounterData,
+  actionOrderTurnOverWeekData,
+  actionOrderCounterWeekData,
 };

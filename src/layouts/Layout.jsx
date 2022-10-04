@@ -40,11 +40,7 @@ const DashBoard = ({ Component, ...children }) => {
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
         >
-          <img
-            className="w-2/3 m-auto mt-4"
-            src={require("../assets/image/logo.PNG")}
-            alt=""
-          />
+          <h1 className="text-xl font-extrabold text-white mt-4 text-center">TAYNGUYENFOOD</h1>
           <hr className="w-4/5 m-auto  border-y-slate-100 my-4"></hr>
           <Menu theme="dark" mode="inline">
             <Menu.Item

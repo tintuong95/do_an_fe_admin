@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { openNotification } from "../../utils/notification.js";
-import { actionOrderCounterData, actionOrderCounterMonth, actionOrderDelete, actionOrderGetAll, actionOrderGets, actionOrderTotalCounter, actionOrderTotalData, actionOrderTotalTurnOver, actionOrderTurnOverMonth } from "./action.js";
+import { actionOrderCounterData, actionOrderCounterMonth, actionOrderCounterWeekData, actionOrderDelete, actionOrderGetAll, actionOrderGets, actionOrderTotalCounter, actionOrderTotalData, actionOrderTotalTurnOver, actionOrderTurnOverMonth, actionOrderTurnOverWeekData } from "./action.js";
 
 const initialState = {
   orders: [],
@@ -9,19 +9,25 @@ const initialState = {
   counterMonth: 0,
   counterTotal: 0,
   counterData: [],
-  totalData:[]
+  totalData:[],
+  couterWeek:[],
+  totalWeek:[],
 };
 
 export const sliceOrder= createSlice({
     name: "order",
     initialState,
-    reducers: {},
+    reducers: {
+      refeshOrder:(state)=>{
+        state.orders=[]
+      }
+    },
     extraReducers:( builder)=>{
       //gets order success
       builder.addCase(
         actionOrderGets.fulfilled,
         (state, { meta, payload, type }) => {
-          state.orders = payload.data;
+          state.orders = state.orders.concat(payload.data);
         }
       );
       //gets order success
@@ -122,6 +128,36 @@ export const sliceOrder= createSlice({
         }
       );
 
+      //gets order  total data success tintuong
+      builder.addCase(
+        actionOrderCounterWeekData.fulfilled,
+        (state, { meta, payload, type }) => {
+          state.couterWeek = payload.data;
+        }
+      );
+      //gets order  total data failure
+      builder.addCase(
+        actionOrderCounterWeekData.rejected,
+        (state, { meta, payload, type, error }) => {
+          console.log(error);
+        }
+      );
+
+      //gets order  total data success tintuong
+      builder.addCase(
+        actionOrderTurnOverWeekData.fulfilled,
+        (state, { meta, payload, type }) => {
+          state.totalWeek = payload.data;
+        }
+      );
+      //gets order  total data failure
+      builder.addCase(
+        actionOrderTurnOverWeekData.rejected,
+        (state, { meta, payload, type, error }) => {
+          console.log(error);
+        }
+      );
+
       //remove order success
       builder.addCase(
         actionOrderDelete.fulfilled,
@@ -139,4 +175,4 @@ export const sliceOrder= createSlice({
     }
 })
 
-export const {}=sliceOrder.actions
+export const { refeshOrder } = sliceOrder.actions;

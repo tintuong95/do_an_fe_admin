@@ -7,26 +7,26 @@ import io from "socket.io-client";
 const socket = io(process.env.REACT_APP_HOST_CHAT);
 const ROOT_CSS = css({
   height: 680,
-  
 });
-
 
 const Chat = () => {
   const [listRoom, setListRoom] = useState();
   const [Room, setRoom] = useState();
   const [listMessage, setListMessage] = useState();
   const [message, setMessage] = useState("");
-console.log(process.env.REACT_APP_HOST_CHAT);
+
   useEffect(() => {
     socket.on("connection");
     socket.emit("listRoom", { limit: 100, offset: 0 });
     socket.on("sendRoom", (data) => {
       setListRoom(data.data);
     });
-    socket.emit("listMessage", { idRoom: Room?.id });
-    socket.on("sendMessage", (data) => {
-      setListMessage(data.data);
-    });
+    if (Room?.id) {
+      socket.emit("listMessageAdmin", { roomID: Room.id });
+      socket.on("sendMessage", (data) => {
+        setListMessage(data.data);
+      });
+    }
     return () => {
       socket.off("connection");
     };
@@ -36,32 +36,28 @@ console.log(process.env.REACT_APP_HOST_CHAT);
     <div className=" w-2/3 m-auto  shadow-lg">
       <Row>
         <Col className="bg-gray-50 p-4 " span={6}>
-          <p
-            className="font-semibold text-lg text-center rounded text-white  my-2 p-2"
-            style={{ backgroundColor: "#f88800" }}
-          >
-            Trò chuyện
-          </p>
+       
           <div
             className="overflow-y-scroll hidden-bar-scroll"
             style={{ height: 680 }}
           >
             {listRoom
               ?.sort((a, b) => {
-                return Number(b.counter) - Number(a.counter);
+                return Number(b.count) - Number(a.count);
               })
               .map((item, index) => (
                 <Button
                   onClick={() => {
                     setRoom(item);
+                   
                   }}
                   className="w-full h-14 border-0 bg-gray-100 mb-2"
                 >
                   <div className="flex">
-                    <Badge count={item.counter}>
+                    <Badge count={item.count}>
                       <Avatar shape="square" size="small" />
                     </Badge>
-                    <p className="ml-4">{item.fullname}</p>
+                    <p className="ml-4">{item.name}</p>
                   </div>
                 </Button>
               ))}
@@ -80,8 +76,8 @@ console.log(process.env.REACT_APP_HOST_CHAT);
                 <Button
                   type="link"
                   onClick={() => {
-                    socket.emit("removeRoom", {
-                      idRoom: Room?.id,
+                    socket.emit("clearMessage", {
+                      roomID: Room?.id,
                     });
                   }}
                   danger
@@ -93,14 +89,14 @@ console.log(process.env.REACT_APP_HOST_CHAT);
           </div>
           <ScrollToBottom className={ROOT_CSS}>
             {listMessage?.map((item, index) => {
-              if (item.status == 1) {
+              if (item.status) {
                 return (
                   <div className="flex justify-end m-4">
                     <div
                       className=" mx-2 shadow-lg inline-block p-3 px-6 text-white text-base rounded-lg "
                       style={{ maxWidth: 700, backgroundColor: "#272727" }}
                     >
-                      {item.content}
+                      {item.message}
                     </div>
                     <Avatar
                       style={{ backgroundColor: "#272727" }}
@@ -113,7 +109,7 @@ console.log(process.env.REACT_APP_HOST_CHAT);
                   <div className="flex justify-start m-4">
                     <Avatar icon={<UserOutlined />} />
                     <div className="bg-gray-100 mx-2 shadow-lg inline-block p-3 px-6  text-base rounded-lg">
-                      {item.content}
+                      {item.message}
                     </div>
                   </div>
                 );
@@ -133,9 +129,9 @@ console.log(process.env.REACT_APP_HOST_CHAT);
               style={{ backgroundColor: "white" }}
               onClick={() => {
                 socket.emit("sendMessage", {
-                  idRoom: Room?.id,
-                  content: message,
-                  status: 0,
+                  roomID: Room?.id,
+                  message,
+                  status: false,
                 });
               }}
             >

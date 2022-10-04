@@ -1,12 +1,14 @@
 import fetchAxios from "../../configs/axios";
 
-async function fetchBlogsGets() {
+async function fetchBlogsGets(payload) {
+  const query = Object.entries(payload)
+    .map((item) => item[0] + "=" + item[1])
+    .join("&");
   return await fetchAxios({
     method: "get",
-    url: "/blog",
+    url: "/blog?" + query,
   });
 }
-
 
 async function fetchBlogsChangeStatus(payload) {
   return await fetchAxios({
@@ -14,7 +16,6 @@ async function fetchBlogsChangeStatus(payload) {
     url: "/blog/status/" + payload.id,
   });
 }
-
 
 async function fetchBlogsPost(payload) {
   return await fetchAxios({
@@ -31,7 +32,7 @@ async function fetchBlogsPost(payload) {
 async function fetchBlogsUpdate(payload) {
   return await fetchAxios({
     method: "put",
-    url: "/blog/"+payload.id,
+    url: "/blog/" + payload.id,
     data: payload.data,
     headers: {
       "Content-Type": "multipart/form-data",
@@ -40,12 +41,10 @@ async function fetchBlogsUpdate(payload) {
   });
 }
 
-
 async function fetchBlogsRemove(payload) {
   return await fetchAxios({
     method: "delete",
     url: "/blog/" + payload.id,
-  
   });
 }
 

@@ -6,14 +6,14 @@ import {  fetchProductCreate, fetchProductGet, fetchProductGets, fetchProductRem
 const actionUserGets =createAsyncThunk(
     "user/gets",
     async (payload,thunkAPI)=>{
-        return await fetchUserGets()
+        return await fetchUserGets(payload);
     }
 )
 const actionUserChangeStatus = createAsyncThunk(
   "user/change-status",
   async (payload, thunkAPI) => {
     const res = await fetchUserChangeStatus(payload);
-     thunkAPI.dispatch(actionUserGets());
+    //  thunkAPI.dispatch(actionUserGets());
     return await res;
   }
 );
