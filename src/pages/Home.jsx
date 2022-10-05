@@ -93,33 +93,34 @@ const Home = () => {
           <p className=" text-slate-600 text-base">ĐƠN TRONG THÁNG (ĐƠN)</p>
         </div>
       </div>
-      <div className="grid  grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={totalData.slice(-7)} />
-          <p className=" text-slate-600 text-base mt-4 text-center">
-            THÔNG KÊ DOANH SỐ
-          </p>
-        </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={counterData.slice(-7)} />
-          <p className=" text-slate-600 text-base mt-4 text-center">
-            THÔNG KÊ ĐƠN HÀNG
-          </p>
-        </div>
-      </div>
       <div className="grid  grid-cols-2 mt-4 gap-4">
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
           <ColumnChart data={totalWeek?.slice(-7)} />
           <p className=" text-slate-600 text-base mt-4 text-center">
-            THÔNG KÊ DOANH SỐ
+            DOANH SỐ TRONG TUẦN
           </p>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
           <ColumnChart data={couterWeek?.slice(-7)} />
           <p className=" text-slate-600 text-base mt-4 text-center">
-            THÔNG KÊ DOANH SỐ
+            ĐƠN HÀNG TRONG TUẦN
+          </p>
+        </div>
+      </div>
+      <div className="grid  grid-cols-2 gap-4 mt-4">
+        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+          <ColumnChart data={totalData.slice(-7)} />
+          <p className=" text-slate-600 text-base mt-4 text-center">
+            DOANH SỐ TRONG NĂM
+          </p>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
+          <ColumnChart data={counterData.slice(-7)} />
+          <p className=" text-slate-600 text-base mt-4 text-center">
+            ĐƠN HÀNG TRONG NĂM
           </p>
         </div>
       </div>

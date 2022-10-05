@@ -81,7 +81,8 @@ code {
 }
 
 .bg-login {
-    background: linear-gradient(162deg, rgba(248, 136, 0, 1) 47%, rgba(255, 228, 0, 1) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(162deg, rgba(255, 255, 255, 1) 0%, rgba(213, 213, 213, 1) 100%);
 }
 
 img {
@@ -90,4 +91,8 @@ img {
 
 .ant-layout-sider-children {
     box-shadow: 2px 2px 10px rgb(173, 173, 173);
+}
+
+.bg-login-right {
+    background-image: url("./assets//image/login.png");
 }

@@ -40,8 +40,8 @@ const DashBoard = ({ Component, ...children }) => {
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
         >
-          <h1 className="text-xl font-extrabold text-white mt-4 text-center">TAYNGUYENFOOD</h1>
-          <hr className="w-4/5 m-auto  border-y-slate-100 my-4"></hr>
+          <h1 className="text-xl font-bold text-white mt-4 pl-6">QUẢN LÝ </h1>
+          <hr className="w-4/5 m-auto border-1  my-4"></hr>
           <Menu theme="dark" mode="inline">
             <Menu.Item
               icon={<HomeOutlined />}
