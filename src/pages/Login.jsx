@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import {useDispatch} from "react-redux"
-import { actionAdminLogin } from "../modules/admin/action.js";
-const Login = () => {
-    const dispatch=useDispatch()
-   const [state, setState] = useState();
+import { useDispatch } from "react-redux";
 
+
+
+import { actionAdminLogin } from "../modules/admin/action.js";
+
+
+
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const [state, setState] = useState();
 
   return (
     <div className="flex justify-center items-center h-screen bg-login ">
@@ -78,9 +84,7 @@ const Login = () => {
             </div>
           </form>
         </div>
-        <div className="w-1/2 bg-login-right" >
-
-        </div>
+        <div className="w-1/2 bg-login-right"></div>
       </div>
     </div>
   );

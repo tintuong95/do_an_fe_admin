@@ -1,33 +1,25 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input, Row,
-  Select
-} from "antd";
+
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { useLocation } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { actionGroupProductGets } from "../modules/group-product/action.js";
-
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import validate from "../configs/validate.js";
-import { actionBlogsUpdate } from "../modules/blog/action.js";
+import { actionBlogsGet, actionBlogsUpdate } from "../modules/blog/action.js";
 
-const { Option } = Select;
+
 
 const UpdateBlog = () => {
-  const { state } = useLocation();
+   const { id } = useParams();
   //initial
   const { groupBlogs } = useSelector((state) => state.groupBlogReducer);
+   const { blog } = useSelector((state) => state.blogReducer);
   const dispatch = useDispatch();
   const formik = useFormik({
-    initialValues: {
-      ...state.data,
-    },
+    enableReinitialize: true,
+    initialValues: blog,
   });
 
   //handler
@@ -38,13 +30,15 @@ const UpdateBlog = () => {
         data.append(item[0], item[1]);
      
     });
-    dispatch(actionBlogsUpdate({ id: state.data.id, data }));
+    dispatch(actionBlogsUpdate({ id, data }));
   }
 
   useEffect(() => {
     dispatch(actionGroupProductGets());
-  }, []);
+    dispatch(actionBlogsGet({id}))
 
+  }, []);
+  console.log(formik.values)
   return (
     <div className=" bg-slate-50 p-8 m-auto rounded" style={{ width: 720 }}>
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">

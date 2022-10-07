@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { openNotification } from "../../utils/notification.js";
 import {
   actionBlogsChangeStatus,
+  actionBlogsGet,
   actionBlogsGets,
   actionBlogsPost,
   actionBlogsRemove,
@@ -101,6 +102,14 @@ export const spliceBlogs = createSlice({
       (state, { meta, payload, type }, error) => {
         //message error
         openNotification("error", "Bạn đã xóa thất bại!");
+      }
+    );
+    // Remove Blogs fail
+    builder.addCase(
+      actionBlogsGet.fulfilled,
+      (state, { meta, payload, type }, error) => {
+        //message error
+       state.blog=payload.data
       }
     );
   },

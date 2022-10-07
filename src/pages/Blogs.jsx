@@ -80,7 +80,6 @@ const Blogs = () => {
       key: "status",
       dataIndex: "status",
       render: (text, record, index) => {
-        console.log(text)
         return (
           <Switch
             onChange={() => {
@@ -119,11 +118,11 @@ const Blogs = () => {
     },
     {
       title: "Sửa",
-      render: (text) => (
+      render: (text, record) => (
         <Link
           to={{
-            pathname: "/update-blog",
-            state: { data: text },
+            pathname: "/update-blog/" + record.id,
+           
           }}
         >
           <Button type="dashed" icon={<EditOutlined />}></Button>

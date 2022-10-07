@@ -126,6 +126,13 @@ const Users = () => {
       },
     },
     {
+      title: "Loại",
+      key: "type",
+      dataIndex: "type",
+      
+
+    },
+    {
       title: "Thời gian",
       key: "updatedAt",
 
@@ -155,7 +162,7 @@ const Users = () => {
       dispatch(refeshUsers())
     }
   }, []);
-
+  console.log("users", users);
   return (
     <>
       <Row justify="space-between">
