@@ -12,7 +12,7 @@ import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import history from "../utils/history.js";
 import { actionAdminProfile } from "../modules/admin/action.js";
-import Loading from "../components/Loading.jsx";
+
 const { Content, Sider } = Layout;
 
 const DashBoard = ({ Component, ...children }) => {
@@ -26,7 +26,7 @@ const DashBoard = ({ Component, ...children }) => {
 
   return (
     <>
-    <Loading/>
+
       <Layout
 
       className="z-0"
@@ -40,7 +40,7 @@ const DashBoard = ({ Component, ...children }) => {
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
         >
-          <h1 className="text-xl font-bold text-white mt-4 pl-6">QUẢN LÝ </h1>
+          <img className="p-6" src={require("../assets/image/logo.PNG")} alt="logo"/>
           <hr className="w-4/5 m-auto border-1  my-4"></hr>
           <Menu theme="dark" mode="inline">
             <Menu.Item

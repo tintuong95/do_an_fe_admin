@@ -38,7 +38,7 @@ const UpdateBlog = () => {
     dispatch(actionBlogsGet({id}))
 
   }, []);
-  console.log(formik.values)
+
   return (
     <div className=" bg-slate-50 p-8 m-auto rounded" style={{ width: 720 }}>
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">

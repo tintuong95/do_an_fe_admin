@@ -84,6 +84,21 @@ const Order = () => {
         return Number(a.status) > Number(b.status);
       },
     },
+      {
+      title: "Thanh toán ",
+      dataIndex: "payment",
+      key: "payment",
+      render: (text) => {
+        if (text == true) {
+          return <Tag color="green">Đã thanh toán</Tag>;
+        } else {
+          return <Tag color="red">Chưa thanh toán</Tag>;
+        }
+      },
+      sorter: (a, b) => {
+        return Number(a.status) > Number(b.status);
+      },
+    },
     {
       title: "Thời gian",
       key: "updatedAt",

@@ -1,5 +1,9 @@
+
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useSpring,animated } from "react-spring";
+
 
 
 
@@ -8,12 +12,53 @@ import { actionAdminLogin } from "../modules/admin/action.js";
 
 
 
+
 const Login = () => {
   const dispatch = useDispatch();
+  const [visible,setVisible]=useState(false)
   const [state, setState] = useState();
+  const styles = useSpring({
+    from: {
+      opacity: 0,
+      marginTop:100,
+  
+    },
+    to: {
+      opacity: 1,
+      marginTop:0,
+     
+    },
+    config:{
+      duration: 3000
+    }
+  })
+
+
+
+  useEffect(() => {
+    setTimeout(()=>{setVisible(true)},4000)
+  }, []);
+  
 
   return (
-    <div className="flex justify-center items-center h-screen bg-login ">
+    
+    <>
+    <div className={visible?"hidden":""}>
+        <div className="z-10 ant-menu-dark fixed h-screen w-screen flex justify-center items-center mb-10">
+          <div className="mb-16">
+            <animated.div style={styles}>
+               <img
+              className=" m-auto mt-4"
+              src={require("../assets/image/logo.PNG")}
+              alt=""
+              width={370}
+            />
+            </animated.div>
+           
+          </div>
+        </div>
+      </div>
+    <div className="flex justify-center items-center h-screen  ">
       <div className="flex bg-white border rounded " style={{ width: 670 }}>
         <div className="w-1/2">
           <form className=" bg-white p-8 py-14 rounded-lg shadow-xl  ">
@@ -86,7 +131,7 @@ const Login = () => {
         </div>
         <div className="w-1/2 bg-login-right"></div>
       </div>
-    </div>
+    </div></>
   );
 };
 

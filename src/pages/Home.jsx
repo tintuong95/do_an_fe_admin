@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import ColumnChart from "../components/CharColumn.jsx";
 import AnimateNumber from "../components/AnimateNumber.jsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +38,8 @@ const Home = () => {
   }, []);
   console.log(couterWeek);
   return (
-    <div className="w-full ">
+
+      <div className="w-full ">
       <div className="grid  grid-cols-4  gap-4 w-full mb-4">
         <div className="bg-white p-5 rounded-lg shadow-lg flex flex-col text-center ">
           <img
@@ -125,6 +126,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

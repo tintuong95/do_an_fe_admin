@@ -60,7 +60,7 @@ code {
 
 .ant-layout-sider-children,
 .ant-menu-dark {
-    background-color: #f88800 !important;
+    background-color: #ffffff !important;
 }
 
 .ant-layout-sider-trigger {
@@ -68,12 +68,20 @@ code {
 }
 
 .ant-menu-item-selected {
-    background-color: #ffe400 !important;
+    background-color: #ffe5c5b8 !important;
     transition: all 0.05s;
 }
 
 .ant-menu-item span {
-    color: white !important;
+    color: rgb(59, 59, 59) !important;
+}
+
+.ant-menu-item {
+    background-color: rgb(255, 246, 238) !important;
+}
+
+.ant-menu-item:hover {
+    background-color: rgb(255, 239, 225) !important;
 }
 
 .ant-menu-item-selected span {
