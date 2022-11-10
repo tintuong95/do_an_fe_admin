@@ -53,15 +53,12 @@ const CommentBlog = () => {
       title: "Xóa",
 
       render: (text, record) => {
-        console.log(record);
-
         return (
           <Button
             type="dashed"
             danger
             onClick={() => {
               confirm(text.id, id);
-              
             }}
             icon={<DeleteOutlined />}
           ></Button>
@@ -81,7 +78,7 @@ const CommentBlog = () => {
       dataSource={commentBlogs.map((item) => ({
         ...item,
         key: item.id,
-        username: item.UserCommentBlog.username,
+        username: item.UserCommentBlog?.username,
       }))}
     />
   );

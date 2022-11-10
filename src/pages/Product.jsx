@@ -83,6 +83,15 @@ const Product = () => {
         return Number(a) > Number(b);
       },
     },
+      {
+      title: "Số lượng",
+      dataIndex: "amount",
+      key: "amount",
+      render: (text) => <a>{text}</a>,
+      sorter: (a, b) => {
+        return Number(a) > Number(b);
+      },
+    },
     {
       title: "Trạng thái",
       key: "status",

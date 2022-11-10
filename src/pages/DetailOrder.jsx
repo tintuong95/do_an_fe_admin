@@ -1,11 +1,13 @@
 import { Button } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { actionOrderChangeStatus } from "../modules/order/action.js";
 import history from "../utils/history.js";
 
 const DetailOrder = () => {
   const { state } = useLocation();
-
+const dispatch=useDispatch()
   return (
     <div className="overflow-x-auto relative w-3/5 m-auto shadow-md bg-slate-50 p-8">
       <p className="text-base text-gray-500  mb-4">Thông tin khách hàng</p>
@@ -71,7 +73,7 @@ const DetailOrder = () => {
                 <td className="py-4 px-6">
                   {(item.OrderItemProduct.price * item.quantity).toLocaleString(
                     "vi-VN"
-                  )}{" "}
+                  )}
                   đ
                 </td>
               </tr>
@@ -132,7 +134,9 @@ const DetailOrder = () => {
 
       <div className="flex mt-8 gap-4 ">
         <div className="flex-1">
-          <Button className="w-full" type="primary" onClick={() => {}}>
+          <Button className="w-full" type="primary" onClick={() => {
+            dispatch(actionOrderChangeStatus({id:state.id}))
+          }}>
             Xác nhận
           </Button>
         </div>

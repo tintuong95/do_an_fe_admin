@@ -70,7 +70,9 @@ export const spliceProduct = createSlice({
     builder.addCase(
       actionProductCreate.fulfilled,
       (state, { meta, payload, type }) => {
+         window.location.href="/product"
         openNotification("success", "Bạn đã tạo mới thành công!");
+       
       }
     );
     //create  product fail
@@ -85,7 +87,8 @@ export const spliceProduct = createSlice({
     builder.addCase(
       actionProductRemove.fulfilled,
       (state, { meta, payload, type }) => {
-        openNotification("success", "Bạn đã xóa thành công!");
+        openNotification("success", "Bạn đã xóa thành công !!");
+        state.products=state.products.filter((item)=>item.id!==meta.arg.id)
       }
     );
     //remove  product fail

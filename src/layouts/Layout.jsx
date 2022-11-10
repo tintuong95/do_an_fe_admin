@@ -9,6 +9,7 @@ import {
 import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import history from "../utils/history.js";
 import { actionAdminProfile } from "../modules/admin/action.js";
@@ -24,11 +25,16 @@ const DashBoard = ({ Component, ...children }) => {
     dispatch(actionAdminProfile());
   }
 
+
+
+
+
+
+
+
   return (
     <>
-
       <Layout
-
       className="z-0"
         style={{
           minHeight: "100vh",
@@ -40,7 +46,7 @@ const DashBoard = ({ Component, ...children }) => {
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
         >
-          <img className="p-6" src={require("../assets/image/logo.PNG")} alt="logo"/>
+          <img style={{cursor:"pointer"}} onClick={()=>{history.push("/")}} className="p-6" src={require("../assets/image/logo.PNG")} alt="logo"/>
           <hr className="w-4/5 m-auto border-1  my-4"></hr>
           <Menu theme="dark" mode="inline">
             <Menu.Item

@@ -10,28 +10,31 @@ const ROOT_CSS = css({
 });
 
 const Chat = () => {
-  const [listUser, setListUser] = useState();
-  const [user, setUser] = useState();
+  const [listRoom, setListRoom] = useState();
+  const [room, setRoom] = useState();
   const [listMessage, setListMessage] = useState();
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     socket.on("connection");
-    socket.emit("userList", { limit: 100, offset: 0 });
-    socket.on("sendListUser", ({ data }) => {
-     
-      setListUser(data);
+    socket.emit("roomList", { limit: 100, offset: 0 });
+    socket.on("roomList", ({ data }) => {
+      setListRoom(data);
     });
-    if(user?.id){
-      socket.emit("userListMessage", { userId: user?.phone });
-      socket.on("sendListUserMessage", ({ data }) => {
-       setListMessage(data);
-      });
-    }
-    return () => {
-      socket.off("connection");
-    };
-  }, [user?.id]);
+  }, [room?.id]);
+
+  useEffect(() => {
+   if(room){
+     socket.emit("join_room", {roomId:room});
+      socket.emit("list_message", { roomId:room });
+      socket.on("receive_message",({data})=>{
+      setListMessage(data)
+    })
+   }
+  }, [room]);
+
+
+
 
   return (
     <div className=" w-2/3 m-auto  shadow-lg">
@@ -41,18 +44,18 @@ const Chat = () => {
             className="overflow-y-scroll hidden-bar-scroll"
             style={{ height: 680 }}
           >
-            {listUser?.map((item, index) => (
+            {listRoom?.map((item, index) => (
               <Button
-                onClick={() => {
-                  setUser(item);
+                onClick={() => {  
+                  setRoom(item.roomId) 
                 }}
                 className="w-full h-14 border-0 bg-gray-100 mb-2"
               >
                 <div className="flex">
-                  {/* <Badge count={item.count}>
+                  <Badge count={item.count}>
                     <Avatar shape="square" size="small" />
-                  </Badge> */}
-                  <p className="ml-4">{item.phone}</p>
+                  </Badge>
+                  <p className="ml-4">{item.roomId}</p>
                 </div>
               </Button>
             ))}
@@ -63,7 +66,7 @@ const Chat = () => {
             <Row justify="space-between">
               <Col>
                 <p type="link" className="text-lg">
-                 {user?.phone}
+                  {/* {user?.phone} */}
                 </p>
               </Col>
 
@@ -91,7 +94,7 @@ const Chat = () => {
                       className=" mx-2 shadow-lg inline-block p-3 px-6 text-white text-base rounded-lg "
                       style={{ maxWidth: 700, backgroundColor: "#272727" }}
                     >
-                      {item.message}
+                      {item.content}
                     </div>
                     <Avatar
                       style={{ backgroundColor: "#272727" }}
@@ -104,7 +107,7 @@ const Chat = () => {
                   <div className="flex justify-start m-4">
                     <Avatar icon={<UserOutlined />} />
                     <div className="bg-gray-100 mx-2 shadow-lg inline-block p-3 px-6  text-base rounded-lg">
-                      {item.message}
+                      {item.content}
                     </div>
                   </div>
                 );
@@ -123,10 +126,14 @@ const Chat = () => {
               className="h-auto rounded-md"
               style={{ backgroundColor: "white" }}
               onClick={() => {
-                socket.emit("giveMessage", {
-                  session: user?.id,
-                  message,
-                  status: false,
+                socket.emit("send_message_admin", {
+                  roomId:room,
+                  data:{
+                    roomId: room,
+                    content:message,
+                    status: true,
+                    state:false
+                  }
                 });
               }}
             >

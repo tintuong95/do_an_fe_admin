@@ -87,6 +87,7 @@ export const spliceUser = createSlice({
       actionUserRemove.fulfilled,
       (state, { meta, payload, type }) => {
         openNotification("success", "Bạn đã xóa thành công!");
+              state.users=state.users.filter((item)=>item.id!==meta.arg.id)
       }
     );
     //remove  product fail

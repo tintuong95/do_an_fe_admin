@@ -58,7 +58,9 @@ export const spliceBlogs = createSlice({
     builder.addCase(
       actionBlogsPost.fulfilled,
       (state, { meta, payload, type }) => {
+              window.location.href="/blogs"
         openNotification("success", "Bạn đã tạo mới thành công!");
+    
       }
     );
 
@@ -93,6 +95,7 @@ export const spliceBlogs = createSlice({
       actionBlogsRemove.fulfilled,
       (state, { meta, payload, type }) => {
         openNotification("success", "Bạn đã xóa thành công!");
+      state.blogs=state.blogs.filter((item)=>item.id!==meta.arg.id)
       }
     );
 

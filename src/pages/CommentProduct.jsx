@@ -81,7 +81,7 @@ const CommentProduct = () => {
       dataSource={commentProducts.map((item) => ({
         ...item,
         key: item.id,
-        username: item.UserCommentProduct.username,
+        username: item.UserCommentProduct?.username,
       }))}
     />
   );

@@ -50,7 +50,6 @@ const actionProductRemove = createAsyncThunk(
   "product/remove",
   async (payload, thunkAPI) => {
     const response = await fetchProductRemove(payload.id);
-   
     return response;
   }
 );

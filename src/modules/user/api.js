@@ -1,21 +1,21 @@
 import fetchAxios from "../../configs/axios.js";
 
 async function fetchUserGets(payload) {
-  const query = Object.entries(payload)
-    .map((item) => item[0] + "=" + item[1])
-    .join("&");
-  return await fetchAxios({
-    method: "get",
-    url: "/user?" + query,
-  });
+    const query = Object.entries(payload)
+        .map((item) => item[0] + "=" + item[1])
+        .join("&");
+    return await fetchAxios({
+        method: "get",
+        url: "/user?" + query,
+    });
 }
 
 
 async function fetchUserChangeStatus(payload) {
-  return await fetchAxios({
-    method: "get",
-    url: "/user/status/" + payload.id,
-  });
+    return await fetchAxios({
+        method: "get",
+        url: "/user/status/" + payload.id,
+    });
 }
 
 // async function fetchProductGet(id) {
@@ -50,11 +50,11 @@ async function fetchUserChangeStatus(payload) {
 // }
 
 
-async function fetchUserRemove(id){
-  return await fetchAxios({
-    method: "delete",
-    url: "/user/" + id,
-  });
+async function fetchUserRemove(id) {
+    return await fetchAxios({
+        method: "delete",
+        url: "/user/" + id,
+    });
 }
 
 export { fetchUserGets, fetchUserRemove, fetchUserChangeStatus };

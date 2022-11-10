@@ -3,7 +3,7 @@ import React from "react";
 const Bill = ({data}) => {
   
   return (
-    <div className="w-full p-5 m-auto" style={{ width: 750 }}>
+    <div className="w-full p-5 m-auto " style={{ width: 750 ,minHeight:1100}}>
       <div className="relative">
         <p className=" text-center   absolute">Mã đơn :{data?.code}</p>
         <p className="font-semibold text-center text-xl mb-4">
