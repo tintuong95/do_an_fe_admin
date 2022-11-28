@@ -181,6 +181,7 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(actionProductGets({ limit: 10, offset }));
+    console.log("products", products)
     return () => {
       dispatch(refeshProducts());
     };
@@ -227,8 +228,9 @@ const Product = () => {
           columns={columns}
           dataSource={products.map((item) => ({
             ...item,
-            key: item.id,
+            key: item?.id,
           }))}
+        
         />
         <div
           className="my-4"

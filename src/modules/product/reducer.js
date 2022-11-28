@@ -23,6 +23,7 @@ export const spliceProduct = createSlice({
     builder.addCase(
       actionProductGets.fulfilled,
       (state, { meta, payload, type }) => {
+
         state.products = state.products.concat(payload.data);
       }
     );
