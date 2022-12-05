@@ -107,22 +107,37 @@ const UpdateProduct = () => {
               ))}
             </select>
           </div>
-          <div className="w-full px-3 mb-2 ">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              GIÁ BÁN
-            </label>
-            <input
-              name="price"
-              onChange={formik.handleChange}
-              defaultValue={formik.values?.price}
-              // pattern={validate.price}
-              required="required"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
-            />
+          <div className="w-full px-3 mb-2 flex gap-2 ">
+            <div className="w-1/2">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                GIÁ BÁN
+              </label>
+              <input
+                name="price"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.price}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
+            <div className="w-1/2">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                SỐ LƯỢNG
+              </label>
+              <input
+                name="amount"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.amount}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
           </div>
           <div className="w-full px-3 mb-2 ">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-              GIÁ BÁN
+              GIẢM GIÁ
             </label>
             <input
               name="sale"
@@ -132,6 +147,60 @@ const UpdateProduct = () => {
               required="required"
               className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
             />
+          </div>
+          <div className="w-full px-3 mb-2 flex gap-2 ">
+            <div className="w-1/4">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Chiều cao (cm)
+              </label>
+              <input
+                name="height"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.height}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
+            <div className="w-1/4">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Chiều dài (cm)
+              </label>
+              <input
+                name="length"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.length}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
+            <div className="w-1/4">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Chiều rộng (cm)
+              </label>
+              <input
+                name="width"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.width}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
+            <div className="w-1/4">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Cân nặng (gram)
+              </label>
+              <input
+                name="weight"
+                onChange={formik.handleChange}
+                defaultValue={formik.values?.weight}
+                // pattern={validate.price}
+                required="required"
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
+              />
+            </div>
           </div>
 
           <div className="w-full px-3 mb-2 ">
@@ -182,6 +251,7 @@ const UpdateProduct = () => {
               MÔ TẢ NGẮN GỌN
             </label>
             <textarea
+            rows={5}
               name="description"
               onChange={formik.handleChange}
               pattern={validate.title}

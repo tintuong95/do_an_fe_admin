@@ -102,7 +102,7 @@ const CreateBlogs = () => {
               required="required"
               name="description"
               onChange={formik.handleChange}
-           
+              rows={5}
               className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 "
             />
           </div>

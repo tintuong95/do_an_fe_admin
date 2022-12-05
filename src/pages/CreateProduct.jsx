@@ -234,6 +234,7 @@ const CreateProduct = () => {
                 MÔ TẢ NGẮN GỌN
               </label>
               <textarea
+                rows={5}
                 pattern={validate.description}
                 required="required"
                 name="description"
