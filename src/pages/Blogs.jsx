@@ -57,7 +57,7 @@ const Blogs = () => {
       dataIndex: "image",
       key: "image",
       render: (text, record, index) => (
-        <img src={text} alt={record.title} className="photo" />
+        <img src={text || require("../assets/image/noimage.png")} alt={record.title} className="photo" />
       ),
     },
     {
@@ -85,7 +85,7 @@ const Blogs = () => {
             onChange={() => {
               dispatch(actionBlogsChangeStatus({ id: record.id }));
             }}
-            defaultChecked={text == "0" ? true : false}
+            defaultChecked={text == "0" ? false : true}
           />
         );
       },

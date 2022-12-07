@@ -24,6 +24,7 @@ import {
 } from "../modules/product/action.js";
 import validate from "../configs/validate.js";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { actionGroupBlogGets } from "../modules/group-blog/action.js";
 
 const { Option } = Select;
 
@@ -56,13 +57,15 @@ const UpdateProduct = () => {
   
     dispatch(actionProductUpdate({ id, data }));
   }
-
+  useEffect(()=>{
+    dispatch(actionGroupBlogGets());
+  },[])
   useEffect(() => {
-    dispatch(actionGroupProductGets());
+   
     dispatch(actionProductGet({ id }));
   }, [id]);
 
-  console.log("product", formik.values);
+  console.log("product", groupProducts);
   return (
     <div className=" bg-slate-50 p-8 m-auto rounded" style={{ width: 720 }}>
       <p className="font-semibold text-xl text-neutral-500 mb-4 ">
@@ -214,7 +217,7 @@ const UpdateProduct = () => {
               onChange={formik.handleChange}
               required="required"
             >
-              <option value="kilogam">Kilogam</option>
+              <option value="gram">Gram</option>
               <option value="hop">Hộp</option>
               <option value="cai">Cái</option>
               <option value="con">Con</option>

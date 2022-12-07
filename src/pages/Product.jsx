@@ -57,7 +57,7 @@ const Product = () => {
       title: "Hình ảnh",
       dataIndex: "image",
       key: "image",
-      render: (text) => <img className="photo" src={text} alt="photo1" />,
+      render: (text) => <img className="photo" src={text||require("../assets/image/noimage.png")} alt="photo1" />,
     },
     {
       title: "Tên sản phẩm",

@@ -32,7 +32,7 @@ const UpdateBlog = () => {
     });
     dispatch(actionBlogsUpdate({ id, data }));
   }
-
+  console.log("groupBlogs", groupBlogs)
   useEffect(() => {
     dispatch(actionGroupProductGets());
     dispatch(actionBlogsGet({id}))

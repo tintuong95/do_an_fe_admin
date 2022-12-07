@@ -194,7 +194,7 @@ const CreateProduct = () => {
                 onChange={formik.handleChange}
                 required="required"
               >
-                <option value="kilogam">Kilogam</option>
+                <option value="gram">Gram</option>
                 <option value="hop">Hộp</option>
                 <option value="cai">Cái</option>
                 <option value="con">Con</option>

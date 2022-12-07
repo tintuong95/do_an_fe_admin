@@ -18,6 +18,7 @@ export const spliceGroupBlog = createSlice({
       actionGroupBlogGets.fulfilled,
       (state, { meta, payload, type }) => {
         state.groupBlogs = payload.data;
+        console.log(" state.groupBlogs", state.groupBlogs)
       }
     );
     //gets group product fail
