@@ -4,6 +4,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import { css } from "@emotion/css";
 import { UserOutlined } from "@ant-design/icons";
 import io from "socket.io-client";
+import moment from "moment/moment";
 const socket = io(process.env.REACT_APP_HOST_CHAT);
 const ROOT_CSS = css({
   height: 680,
@@ -55,47 +56,29 @@ const Chat = () => {
                   <Badge count={item.count}>
                     <Avatar shape="square" size="small" />
                   </Badge>
-                  <p className="ml-4">{item.roomId}</p>
+                  <p className="ml-4">{item.phone}</p>
                 </div>
               </Button>
             ))}
           </div>
         </Col>
         <Col className="bg-white flex flex-col  p-2" span={18}>
-          <div className="bg-gray-50 p-4 m-1 flex-none ">
-            <Row justify="space-between">
-              <Col>
-                <p type="link" className="text-lg">
-                  {/* {user?.phone} */}
-                </p>
-              </Col>
-
-              <Col>
-                {/* <Button
-                  type="link"
-                  onClick={() => {
-                    socket.emit("clearMessage", {
-                      roomID: user?.id,
-                    });
-                  }}
-                  danger
-                >
-                  Xóa trò chuyện
-                </Button> */}
-              </Col>
-            </Row>
-          </div>
           <ScrollToBottom className={ROOT_CSS}>
             {listMessage?.map((item, index) => {
               if (item.status) {
                 return (
                   <div className="flex justify-end m-4">
-                    <div
-                      className=" mx-2 shadow-lg inline-block p-3 px-6 text-white text-base rounded-lg "
-                      style={{ maxWidth: 700, backgroundColor: "#272727" }}
-                    >
-                      {item.content}
-                    </div>
+                    <div className="flex flex-col">
+                      <div
+                        className=" mx-2 border inline-block p-3 px-6 text-cyan-800 text-base rounded-lg "
+                        style={{ maxWidth: 700 }}
+                      >
+                        {item.content}
+                      </div>
+                      <span className="mt-1 m-auto text-slate-400">
+                        {moment(item.updatedAt).format('HH:MM:ss')}
+                      </span>
+                  </div>
                     <Avatar
                       style={{ backgroundColor: "#272727" }}
                       icon={<UserOutlined />}
@@ -106,9 +89,14 @@ const Chat = () => {
                 return (
                   <div className="flex justify-start m-4">
                     <Avatar icon={<UserOutlined />} />
-                    <div className="bg-gray-100 mx-2 shadow-lg inline-block p-3 px-6  text-base rounded-lg">
-                      {item.content}
-                    </div>
+                   <div className="flex flex-col">
+                      <div className=" mx-2 border inline-block p-3 px-6  text-base rounded-lg x">
+                        {item.content}
+                      </div>
+                      <span className="mt-1 m-auto text-slate-400">
+                        {moment(item.updatedAt).format('HH:MM:ss')}
+                      </span>
+                   </div>
                   </div>
                 );
               }
@@ -121,6 +109,7 @@ const Chat = () => {
               onChange={(e) => {
                 setMessage(e.target.value);
               }}
+              value={message}
             ></Input.TextArea>
             <Button
               className="h-auto rounded-md"
@@ -135,6 +124,7 @@ const Chat = () => {
                     state:false
                   }
                 });
+                setMessage("")
               }}
             >
               Gửi tin nhắn

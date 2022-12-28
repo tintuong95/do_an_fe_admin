@@ -58,7 +58,7 @@ const UpdateProduct = () => {
     dispatch(actionProductUpdate({ id, data }));
   }
   useEffect(()=>{
-    dispatch(actionGroupBlogGets());
+    dispatch(actionGroupProductGets());
   },[])
   useEffect(() => {
    

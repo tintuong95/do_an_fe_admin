@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import history from "../../utils/history.js";
 import { openNotification } from "../../utils/notification.js";
-import { actionAdminLogin, actionAdminProfile } from "./action.js";
+import { actionAdminLogin, actionAdminLogout, actionAdminProfile } from "./action.js";
 
 const initialState = {
     admin: {},
@@ -51,7 +51,18 @@ export const sliceAdmin = createSlice({
                 openNotification("error", "Tài khoản không tồn tại!");
             }
         );
+
+
+        //admin login success
+        builder.addCase(
+            actionAdminLogout.fulfilled,
+            (state, { meta, payload, type }) => {
+                state.login = false;
+
+                history.push("/login");
+            }
+        );
     },
 });
 
-export const {} = sliceAdmin.actions;
+export const { } = sliceAdmin.actions;

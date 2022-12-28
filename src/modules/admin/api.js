@@ -7,6 +7,14 @@ async function fetchAdminProfile() {
   });
 }
 
+async function fetchAdminLogout() {
+  return await fetchAxios({
+    method: "get",
+    url: "/admin/logout",
+  });
+}
+
+
 async function fetchAdminLogin(payload) {
   return await fetchAxios({
     method: "post",
@@ -19,4 +27,4 @@ async function fetchAdminLogin(payload) {
   });
 }
 
-export { fetchAdminProfile, fetchAdminLogin };
+export { fetchAdminProfile, fetchAdminLogin, fetchAdminLogout };

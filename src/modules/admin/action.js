@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchAdminLogin, fetchAdminProfile } from "./api.js";
+import { fetchAdminLogin, fetchAdminLogout, fetchAdminProfile } from "./api.js";
 
 const actionAdminProfile = createAsyncThunk(
   "action_admin_profile",
@@ -15,4 +15,12 @@ const actionAdminLogin = createAsyncThunk(
   }
 );
 
-export { actionAdminProfile, actionAdminLogin };
+const actionAdminLogout = createAsyncThunk(
+  "action_admin_logout",
+  async (payload, thunkAPI) => {
+    return await fetchAdminLogout(payload);
+  }
+);
+
+
+export { actionAdminProfile, actionAdminLogin, actionAdminLogout };

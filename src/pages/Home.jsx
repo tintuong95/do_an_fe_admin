@@ -36,7 +36,7 @@ const Home = () => {
      dispatch(actionOrderTurnOverWeekData());
       dispatch(actionOrderCounterWeekData());
   }, []);
-  console.log(couterWeek);
+  console.log("couterWeek", couterWeek);
   return (
 
       <div className="w-full ">
@@ -97,14 +97,14 @@ const Home = () => {
 
       <div className="grid  grid-cols-2 mt-4 gap-4">
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={totalWeek?.slice(-7)} />
+          <ColumnChart data={totalWeek} />
           <p className=" text-slate-600 text-base mt-4 text-center">
             DOANH SỐ TRONG TUẦN
           </p>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={couterWeek?.slice(-7)} />
+          <ColumnChart data={couterWeek} />
           <p className=" text-slate-600 text-base mt-4 text-center">
             ĐƠN HÀNG TRONG TUẦN
           </p>
@@ -112,14 +112,14 @@ const Home = () => {
       </div>
       <div className="grid  grid-cols-2 gap-4 mt-4">
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={totalData.slice(-7)} />
+          <ColumnChart data={totalData} />
           <p className=" text-slate-600 text-base mt-4 text-center">
             DOANH SỐ TRONG NĂM
           </p>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-12 pb-6 ">
-          <ColumnChart data={counterData.slice(-7)} />
+          <ColumnChart data={counterData} />
           <p className=" text-slate-600 text-base mt-4 text-center">
             ĐƠN HÀNG TRONG NĂM
           </p>
