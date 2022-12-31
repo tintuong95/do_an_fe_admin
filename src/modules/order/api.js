@@ -20,7 +20,8 @@ async function fetchOrderTotalTurnOver() {
 async function fetchOrderTurnOverMonth(payload) {
     return await fetchAxios({
         method: "GET",
-        url: "/order/total-month"
+        url: "/order/total-month",
+     
     });
 }
 

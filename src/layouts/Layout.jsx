@@ -24,9 +24,7 @@ const DashBoard = ({ Component, ...children }) => {
   const { login } = useSelector((state) => state.adminReducer);
   const dispatch = useDispatch();
 
-  if (!login) {
-    dispatch(actionAdminProfile());
-  }
+
 
   useEffect(() => {
     socket.on("connection");
@@ -35,6 +33,12 @@ const DashBoard = ({ Component, ...children }) => {
       setListRoom(data);
     });
   }, []);
+
+  useEffect(() => {
+    if (login==false) {
+      history.push("/login");
+    }
+  }, [])
 
 
 

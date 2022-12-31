@@ -6,7 +6,7 @@ import { actionAdminLogin, actionAdminLogout, actionAdminProfile } from "./actio
 
 const initialState = {
     admin: {},
-    login: false,
+    login: JSON.parse(sessionStorage.getItem("isLogin")) || false,
 };
 
 export const sliceAdmin = createSlice({
@@ -23,6 +23,7 @@ export const sliceAdmin = createSlice({
             (state, { meta, payload, type }) => {
 
                 state.login = true;
+                sessionStorage.setItem("isLogin",true)
             }
         );
         //admin profile failure
@@ -38,7 +39,8 @@ export const sliceAdmin = createSlice({
             actionAdminLogin.fulfilled,
             (state, { meta, payload, type }) => {
                 state.login = true;
-
+                sessionStorage.setItem("isLogin", true)
+                sessionStorage.setItem("access_token", payload.access_token)
                 history.push("/home");
             }
         );
@@ -58,8 +60,9 @@ export const sliceAdmin = createSlice({
             actionAdminLogout.fulfilled,
             (state, { meta, payload, type }) => {
                 state.login = false;
-
+                sessionStorage.removeItem("access_token")
                 history.push("/login");
+                sessionStorage.setItem("isLogin", false)
             }
         );
     },
